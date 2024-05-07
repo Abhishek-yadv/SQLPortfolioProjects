@@ -1,5 +1,3 @@
-Apologies for missing some content. Here's an updated README.md that includes the data investigation section and all other content:
-
 # 🏨 Hotel Booking Demand - Data Cleaning
 
 ## Data Cleaning
