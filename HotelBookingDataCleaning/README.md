@@ -16,7 +16,7 @@ Don't worry, I won't remove a single line from the file. Here's the README.md wi
 
 # 🏨 Hotel Booking Demand - Data Cleaning
 
-/*
+
 **Project: Data Cleaning for Hotel Booking Demand Dataset**
 
 Introduction:
@@ -25,7 +25,7 @@ This dataset encompasses reservation details for both a city hotel and a resort 
 The goal of this data cleaning project is to prepare and transform the Hotel Booking Demand dataset using SQL queries, ensuring that the data is clean, consistent, and ready for further analysis or modeling tasks.
 
 This data cleaning process may involve the following steps:
-1. ** Data Investigation **:
+1. **Data Investigation**:
    - Examine the structure of the dataset, including the number of rows and columns.
    - Check for any obvious issues such as unexpected data types or missing values.
    - Explore the distribution of values in each column to understand the data range and potential outliers.
@@ -65,36 +65,34 @@ and the rationale behind the decisions. This documentation will be helpful for f
 After completing the data cleaning process, the cleaned and transformed Hotel Booking Demand dataset will be ready for further analysis,
 such as exploring descriptive statistics, building predictive models, or generating insights and recommendations for the hotel business.
 
-*/
 
 
 ## 🔍 Data Investigation
 
-/* Data Investigation */
--- Check the structure of the dataset
+#### Check the structure of the dataset
 ```
 DESCRIBE hotel_bookings;
 ```
--- Checking random data values
+#### Checking random data values
 ```
 SELECT *
 FROM hotel_bookings
 ORDER BY RAND()
 LIMIT 10;
 ```
--- Count the number of rows in the table
+#### Count the number of rows in the table
 ```
 SELECT COUNT(*) AS num_rows
 FROM hotel_bookings;
 ```
--- Count the number of columns in the table
+#### Count the number of columns in the table
 ```
 SELECT COUNT(*) AS num_columns
 FROM information_schema.columns
 WHERE table_name = 'hotel_bookings';
 ```
 
-🔎 Observations and Conclusions:
+## 🔎 Observations and Conclusions:
 
 1. The columns `arrival_date_year`, `arrival_date_month`, and `arrival_date_day_of_month` should be merged into one new column named 'arrival_date'.
 2. The values in `is_repeated_guest` should be 'yes' or 'no' instead of numbers.
@@ -105,13 +103,11 @@ WHERE table_name = 'hotel_bookings';
 7. `reservation_status_date` (object) should be converted to a datetime datatype.
 
 ## 🧼 Data Cleaning
-
-/** Data Cleaning **/
--- Check the datatype of the dataset
+#### Check the datatype of the dataset
 ```
 DESCRIBE hotel_bookings;
 ```
--- Checking the null value in column
+#### Checking the null value in column
 ```
 SET @custom_sql = 'SELECT NULL AS first_row';
 SELECT @custom_sql := CONCAT(@custom_sql, ', SUM(CASE WHEN ', COLUMN_NAME, ' IS NULL THEN 1 ELSE 0 END) AS ', COLUMN_NAME)
@@ -124,7 +120,7 @@ PREPARE stmt FROM @custom_sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 ```
--- Null value column percent
+#### Null value column percent
 ```
 WITH Total_rows AS (SELECT COUNT(*)
 FROM hotel_bookings),
@@ -148,31 +144,31 @@ SELECT (Total_null/Total_rows)*100 ;
 9. Change values in `required_car_parking_spaces` to 'Yes' or 'No'.
 10. Rename column `adr` to `average_daily_rate`.
 
-/* 1. Convert reservation_status_date from object to datetime */
+#### 1. Convert reservation_status_date from object to datetime.
 
 ```
 ALTER TABLE hotel_bookings
 MODIFY COLUMN reservation_status_date DATETIME;
 ```
 
-/* 2. Remove rows with null values in `children`, `country`, and `agent` columns. */
+#### 2. Remove rows with null values in `children`, `country`, and `agent` columns.
 ```
 DELETE FROM hotel_bookings
 WHERE children IS NULL OR country IS NULL OR agent IS NULL;
 ```
 
-/* 3. Drop company column as its null values take up more than 70% of rows: */
+#### 3. Drop company column as its null values take up more than 70% of rows:
 ```
 ALTER TABLE hotel_bookings
 DROP COLUMN company;
 ```
-/* 4. Merge `arrival_date_year`, `arrival_date_month`, `arrival_date_day_of_month` into one `arrival_date` column with datetime datatype.*/
+#### 4. Merge `arrival_date_year`, `arrival_date_month`, `arrival_date_day_of_month` into one `arrival_date` column with datetime datatype.####
 -- Add new column
 ```
 ALTER TABLE hotel_bookings
 ADD COLUMN arrival_date DATETIME;
 ```
--- Update arrival_date column
+#### Update arrival_date column
 ```
 UPDATE hotel_bookings
 SET arrival_date = CONCAT(arrival_date_year, '-', 
@@ -193,8 +189,7 @@ SET arrival_date = CONCAT(arrival_date_year, '-',
                            '-', 
                            arrival_date_day_of_month);
 ```
-/* 5. Drop columns `arrival_date_year`, `arrival_date_month`, `arrival_date_day_of_month`.*/
-# Dropping Transformed Columns 
+#### 5. Drop columns `arrival_date_year`, `arrival_date_month`, `arrival_date_day_of_month`.
 ```
 ALTER TABLE hotel_bookings
 DROP COLUMN arrival_date_year,
@@ -202,37 +197,37 @@ DROP COLUMN arrival_date_month,
 DROP COLUMN arrival_date_day_of_month
 ```
 
-/* 6. Move the `arrival_date` column to the right side of `lead_time`.*/
+#### 6. Move the `arrival_date` column to the right side of `lead_time`.
 ```
 ALTER TABLE hotel_bookings
 CHANGE COLUMN arrival_date arrival_date Datetime AFTER lead_time;
 ```
 
-/* 7. Convert `is_canceled` from numbers to 'Yes' or 'No'.*/
+#### 7. Convert `is_canceled` from numbers to 'Yes' or 'No'.
 ```
 UPDATE hotel_bookings
 SET is_canceled = CASE WHEN is_canceled = 1 THEN 'Yes' ELSE 'No' END;
 ```
 
-/* 8. Change values in `is_repeated_guest` to 'Yes' or 'No'.*/
+#### 8. Change values in `is_repeated_guest` to 'Yes' or 'No'.
 ```
 UPDATE hotel_bookings
 SET is_repeated_guest = CASE WHEN is_repeated_guest = 1 THEN 'Yes' ELSE 'No' END;
 ```
 
-*** Notable: After frustrated throw error got It's throwing an error due to compatibility of column datatype, so we should alter it
+# Notable: throwing an error due to compatibility of column datatype, so we should alter it
 ```
 ALTER TABLE hotel_bookings
 MODIFY COLUMN is_repeated_guest VARCHAR(3);
 ```
 
--- Now let's do it
+Now let's do it
 ```
 UPDATE hotel_bookings
 SET is_repeated_guest = CASE WHEN is_repeated_guest = 1 THEN 'Yes' ELSE 'No' END;
 ```
 
-/* 9. Change values in `required_car_parking_spaces` to 'Yes' or 'No'.*/
+#### 9. Change values in `required_car_parking_spaces` to 'Yes' or 'No'.
 ```
 ALTER TABLE hotel_bookings
 MODIFY COLUMN required_car_parking_spaces VARCHAR(3);
@@ -243,7 +238,7 @@ UPDATE hotel_bookings
 SET required_car_parking_spaces = CASE WHEN required_car_parking_spaces > 0 THEN 'Yes' ELSE 'No' END;
 ```
 
-/* 10. Rename column `adr` to `average_daily_rate`.*/
+#### 10. Rename column `adr` to `average_daily_rate`.
 
 ```
 ALTER TABLE hotel_bookings
