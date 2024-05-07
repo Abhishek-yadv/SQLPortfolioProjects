@@ -60,8 +60,7 @@ This data cleaning process may involve the following steps:
    - Implement checks and constraints to ensure data integrity and validity
    - Use SQL queries to identify and handle outliers or invalid data points
 
-Throughout the data cleaning process, it is recommended to document the steps taken, any assumptions made,
-and the rationale behind the decisions. This documentation will be helpful for future reference and collaboration.
+Throughout this data cleaning process,I have documented steps taken, any assumptions made.
 After completing the data cleaning process, the cleaned and transformed Hotel Booking Demand dataset will be ready for further analysis,
 such as exploring descriptive statistics, building predictive models, or generating insights and recommendations for the hotel business.
 
