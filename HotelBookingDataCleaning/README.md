@@ -1,4 +1,4 @@
-Sure, I can help you with that. Here's the README.md file in the same format as the provided sample, using the SQL code you provided:
+Apologies for missing some content. Here's an updated README.md that includes the data investigation section and all other content:
 
 # 🏨 Hotel Booking Demand - Data Cleaning
 
@@ -19,6 +19,44 @@ There is no one absolute way to define the steps involved in the process of data
 This dataset encompasses reservation details for both a city hotel and a resort hotel, detailing the timing of reservations, duration of visits, counts of adults, children, and babies, as well as the availability of parking spaces, among various other aspects.
 
 The dataset contains 88876 rows and 64 columns. The attributes included are hotel, arrival date, lead time, reservation status, and various other booking-related details.
+
+## Data Investigation
+
+Before starting the data cleaning process, it's essential to investigate the dataset to understand its structure, identify potential issues, and make informed decisions about the cleaning steps.
+
+### Examining the Dataset Structure
+
+```sql
+-- Check the structure of the dataset
+DESCRIBE hotel_bookings;
+
+-- Checking random data values
+SELECT *
+FROM hotel_bookings
+ORDER BY RAND()
+LIMIT 10;
+
+-- Count the number of rows in the table
+SELECT COUNT(*) AS num_rows
+FROM hotel_bookings;
+
+-- Count the number of columns in the table
+SELECT COUNT(*) AS num_columns
+FROM information_schema.columns
+WHERE table_name = 'hotel_bookings';
+```
+
+### Observations and Conclusions
+
+During the data investigation phase, the following observations and conclusions were made:
+
+1. The columns `arrival_date_year`, `arrival_date_month`, and `arrival_date_day_of_month` should be merged into one new column named 'arrival_date'.
+2. The values in `is_repeated_guest` should be 'yes' or 'no' instead of numbers.
+3. Consider changing the column name of `adr` to `average_daily_rate` to avoid confusion.
+4. The values in `required_car_parking_spaces` should be 'yes' or 'no' instead of numbers.
+5. The total number of rows in this table is 88876.
+6. The total number of columns in this table is 64.
+7. The `reservation_status_date` column (object) should be converted to a datetime datatype.
 
 ## Cleaning up the Data
 
