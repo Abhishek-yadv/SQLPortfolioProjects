@@ -241,6 +241,7 @@ SET required_car_parking_spaces = CASE WHEN required_car_parking_spaces > 0 THEN
 #### 10. Rename column `adr` to `average_daily_rate`.
 
 ```
+
 ALTER TABLE hotel_bookings
 RENAME COLUMN adr TO average_daily_rate;
 ```
