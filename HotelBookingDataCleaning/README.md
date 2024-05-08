@@ -66,19 +66,19 @@ such as exploring descriptive statistics, building predictive models, or generat
 ```
 DESCRIBE hotel_bookings;
 ```
-#### Checking random data values
+#### Checking random data records
 ```
 SELECT *
 FROM hotel_bookings
 ORDER BY RAND()
 LIMIT 10;
 ```
-#### Count the number of rows in the table
+#### Rows size in the table
 ```
 SELECT COUNT(*) AS num_rows
 FROM hotel_bookings;
 ```
-#### Count the number of columns in the table
+#### Columns size in the table
 ```
 SELECT COUNT(*) AS num_columns
 FROM information_schema.columns
