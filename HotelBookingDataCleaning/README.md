@@ -12,8 +12,6 @@ There is no one absolute way to define the steps involved in the process of data
 - Consistency
 - Uniqueness
 
-Don't worry, I won't remove a single line from the file. Here's the README.md with the complete content, formatted with emojis and styling:
-
 # 🏨 Hotel Booking Demand - Data Cleaning
 
 
@@ -23,12 +21,12 @@ Introduction:
 
 This dataset encompasses reservation details for both a city hotel and a resort hotel, detailing the timing of reservations, duration of visits, counts of adults, children, and babies, as well as the availability of parking spaces, among various other aspects.
 The goal of this data cleaning project is to prepare and transform the Hotel Booking Demand dataset using SQL queries, ensuring that the data is clean, consistent, and ready for further analysis or modeling tasks.
+***Dataset: [Link](https://www.kaggle.com/datasets/jessemostipak/hotel-booking-demand/code?datasetId=511638&sortBy=voteCount)***
 
-This data cleaning process may involve the following steps:
+This data cleaning process involve the following steps:
 1. **Data Investigation**:
    - Examine the structure of the dataset, including the number of rows and columns.
    - Check for any obvious issues such as unexpected data types or missing values.
-   - Explore the distribution of values in each column to understand the data range and potential outliers.
    - Investigate any columns with unusual patterns or unexpected values that may require further attention during cleaning.
    
 2. **Handling Missing Values**:
