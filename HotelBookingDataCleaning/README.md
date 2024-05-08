@@ -54,6 +54,7 @@ This data cleaning process involve the following steps:
    - Implement checks and constraints to ensure data integrity and validity
    - Use SQL queries to identify and handle outliers or invalid data points
 
+The dataset is present in the form of an csv File. which I imported it in the Mysql to continue with the process of Data Cleaning.
 Throughout this data cleaning process,I have documented steps taken, any assumptions made.
 After completing the data cleaning process, the cleaned and transformed Hotel Booking Demand dataset will be ready for further analysis,
 such as exploring descriptive statistics, building predictive models, or generating insights and recommendations for the hotel business.
