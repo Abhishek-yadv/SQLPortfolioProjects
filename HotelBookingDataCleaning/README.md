@@ -12,10 +12,6 @@ There is no one absolute way to define the steps involved in the process of data
 - Consistency
 - Uniqueness
 
-# 🏨 Hotel Booking Demand - Data Cleaning
-
-
-**Project: Data Cleaning for Hotel Booking Demand Dataset**
 
 Introduction:
 
