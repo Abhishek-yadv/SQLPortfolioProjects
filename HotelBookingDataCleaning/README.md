@@ -252,4 +252,4 @@ LIMIT 10;
 DESCRIBE hotel_bookings
 ```
 
-🎉 Now this cleaned and transformed 🚀
+🎉 Now this Dataset has been cleaned and transformed 🚀
