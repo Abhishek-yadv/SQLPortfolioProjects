@@ -67,6 +67,8 @@ such as exploring descriptive statistics, building predictive models, or generat
 ```
 DESCRIBE hotel_bookings;
 ```
+![l1](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/2350f381-714d-4b89-9e07-6f5a53129ed9)
+
 #### Checking random data records
 ```
 SELECT *
@@ -74,17 +76,22 @@ FROM hotel_bookings
 ORDER BY RAND()
 LIMIT 10;
 ```
+![l2](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/7b6e7dc8-b603-4ffe-813e-597daa8fdcef)
+
 #### Rows size in the table
 ```
 SELECT COUNT(*) AS num_rows
 FROM hotel_bookings;
 ```
+![l3](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/d660e22b-662f-4f25-afbe-501a690f8e3a)
+
 #### Columns size in the table
 ```
 SELECT COUNT(*) AS num_columns
 FROM information_schema.columns
 WHERE table_name = 'hotel_bookings';
 ```
+![l4](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/163c270d-baa8-43ae-9eda-513ccdbc8525)
 
 ## 🔎 Observations and Conclusions:
 
@@ -101,6 +108,8 @@ WHERE table_name = 'hotel_bookings';
 ```
 DESCRIBE hotel_bookings;
 ```
+![l5](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/43beee56-94eb-4c5f-8a99-f93338ba4da4)
+
 #### Checking the null value in column
 ```
 SET @custom_sql = 'SELECT NULL AS first_row';
@@ -114,6 +123,9 @@ PREPARE stmt FROM @custom_sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 ```
+![l6](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/046f582b-ab6c-4f45-a8a9-b77a7fb83492)
+
+
 #### Null value column percent
 ```
 WITH Total_rows AS (SELECT COUNT(*)
