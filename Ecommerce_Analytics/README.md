@@ -59,7 +59,7 @@ The `salesdata` dataset is initially imported as a CSV file into MySQL to begin 
 
 # Time Series Analysis
 
-### Sales Revenue Over Time
+#### Sales Revenue Over Time
 ```markdown
 This query retrieves the monthly sales revenue based on the ordered value.
 
@@ -73,7 +73,7 @@ GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
 
-### Sales Revenue by Delivered Value Over Time
+#### Sales Revenue by Delivered Value Over Time
 This query retrieves the monthly sales revenue based on the delivered value.
 
 ```sql
@@ -86,7 +86,7 @@ GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
 
-### Tracking Changes in Cancellation/Undelivered Value Over Time
+#### Tracking Changes in Cancellation/Undelivered Value Over Time
 This query tracks the monthly changes in the undelivered value (cancellations).
 
 ```sql
@@ -100,7 +100,7 @@ GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY MONTH(Order_Date);
 ```
 
-### View All Data
+#### View All Data
 This query selects all data from the `salesdata` table.
 
 ```sql
@@ -108,7 +108,7 @@ SELECT *
 FROM SALESDATA
 ```
 
-### Number of Sales Representatives Over Time
+#### Number of Sales Representatives Over Time
 This query retrieves the number of distinct sales representatives for each month.
 
 ```sql
@@ -121,7 +121,7 @@ GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
 
-### Days with Highest Sales Value Over Time
+#### Days with Highest Sales Value Over Time
 This query retrieves the top 10 days with the highest sales value based on the ordered value.
 
 ```sql
@@ -131,7 +131,7 @@ GROUP BY Order_Date
 ORDER BY TotalRevenue DESC;
 ```
 
-### Months with Highest Sales
+#### Months with Highest Sales
 This query retrieves the top 3 months with the highest sales based on the ordered value.
 
 ```sql
@@ -141,7 +141,7 @@ GROUP BY DATENAME(month, Order_Date)
 ORDER BY TotalRevenue DESC;
 ```
 
-### Months with Lowest Sales
+#### Months with Lowest Sales
 This query retrieves the top 3 months with the lowest sales based on the ordered value.
 
 ```sql
