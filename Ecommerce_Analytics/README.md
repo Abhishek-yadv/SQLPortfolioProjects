@@ -58,7 +58,6 @@ The `salesdata` dataset is initially imported as a CSV file into MySQL to begin 
 
 
 
-Sure, here's the markdown formatting with proper descriptions for the first part of the SQL queries:
 
 ```markdown
 # Time Series Analysis
@@ -127,7 +126,7 @@ ORDER BY year, MONTH(Order_Date);
 ## Days with Highest Sales Value Over Time
 This query retrieves the top 10 days with the highest sales value based on the ordered value.
 
-```
+```sql
 SELECT Top 10 Order_Date, ROUND(SUM(Ordered_Value),2) AS TotalRevenue
 FROM SalesData
 GROUP BY Order_Date
@@ -137,7 +136,7 @@ ORDER BY TotalRevenue DESC;
 ## Months with Highest Sales
 This query retrieves the top 3 months with the highest sales based on the ordered value.
 
-```
+```sql
 SELECT TOP 3 DATENAME(month, Order_Date) AS Month, ROUND(SUM(Ordered_Value), 2) AS TotalRevenue
 FROM SalesData
 GROUP BY DATENAME(month, Order_Date)
@@ -147,7 +146,7 @@ ORDER BY TotalRevenue DESC;
 ## Months with Lowest Sales
 This query retrieves the top 3 months with the lowest sales based on the ordered value.
 
-```
+```sql
 SELECT TOP 3 DATENAME(month, Order_Date) AS Month, ROUND(SUM(Ordered_Value), 2) AS TotalRevenue
 FROM SalesData
 GROUP BY DATENAME(month, Order_Date)
