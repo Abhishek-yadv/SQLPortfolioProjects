@@ -18,7 +18,7 @@ The datasets is taken from [Superzop](https://www.superzop.com/), a B2B e-commer
 - Decide whether to remove rows with missing values or impute missing values using appropriate techniques (e.g., mean, median, mode imputation).
 - Implement SQL queries to handle missing values based on the chosen approach.
 
-## Removing Duplicates 🚫
+## Handling Duplicates 🚫
 
 - Identify duplicate rows based on a combination of relevant columns.
 - Use SQL queries with window functions or common table expressions (CTEs) to identify and remove duplicate rows.
@@ -51,10 +51,7 @@ The datasets is taken from [Superzop](https://www.superzop.com/), a B2B e-commer
 The `salesdata` dataset is initially imported as a CSV file into MySQL to begin the data cleaning process. Throughout the cleaning process, steps taken and any assumptions made are documented to ensure transparency and reproducibility. Once the data cleaning process is complete, the cleaned and transformed dataset will be ready for further analysis, such as exploring descriptive statistics, building predictive models, or generating insights and recommendations for business decision-making.
 
 
-Here's the formatted version with concise descriptions for the provided SQL queries:
-
-
-# Data Investigation 👀
+# Data Investigation 
 
 ## Checking Table Structure and Data Types
 ```sql
@@ -124,6 +121,17 @@ SELECT
     SUM(CASE WHEN FMCG IS NULL THEN 1 ELSE 0 END) AS fmcg,
     SUM(CASE WHEN Delivered_Amt_without_Sugar_FMCG IS NULL THEN 1 ELSE 0 END) AS null_delivered_amt_without_sugar_fmcg
 FROM salesdata;
+```
+## Handling Duplicates 🚫
+```sql
+    SELECT
+    Store_ID,
+    Order_Number,
+    COUNT(*) AS duplicate_count
+FROM salesdata
+GROUP BY Store_ID, Order_Number
+HAVING COUNT(*) > 1
+ORDER BY duplicate_count DESC;
 ```
 
 ## Observations and Conclusions
