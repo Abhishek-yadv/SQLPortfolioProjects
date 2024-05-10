@@ -145,10 +145,8 @@ FROM salesdata;
 
 Here's the formatted version with concise descriptions for the data preprocessing queries:
 
-```markdown
-# Data Preprocessing
-
 ## Handling Inconsistent Data
+```markdown
 
 ```sql
 -- Rename TIMESTAMP column
