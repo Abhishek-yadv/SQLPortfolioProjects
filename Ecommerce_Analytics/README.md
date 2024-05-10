@@ -143,9 +143,106 @@ FROM salesdata;
 - The analysis will focus on overall sales, which is the company's core business (staples).
 - The dataset contains 12,740 rows and 15 columns, spanning the date range from 01-02-2023 to 31-10-2023.
 
+Here's the formatted version with concise descriptions for the data preprocessing queries:
 
+```markdown
+# Data Preprocessing
 
+## Handling Inconsistent Data
 
+```sql
+-- Rename TIMESTAMP column
+EXEC sp_rename 'salesdata.TIMESTAMP', 'Time_stamp', 'COLUMN';
+
+-- Updating Order_Number
+UPDATE salesdata
+SET Order_Number = SUBSTRING(Order_Number, CHARINDEX('/', Order_Number) + 1, LEN(Order_Number));
+```
+
+## Standardizing Data Formats
+
+```sql
+-- Convert Order_Date data type to DATE
+UPDATE salesdata
+SET Order_Date = CONVERT(DATE, Order_Date, 105);
+
+ALTER TABLE salesdata
+ALTER COLUMN Order_Date DATE;
+
+-- Convert Time_Stamp column data type to DATETIME2
+UPDATE salesdata
+SET Time_Stamp = CONVERT(DATETIME2, Time_Stamp, 105);
+
+ALTER TABLE salesdata
+ALTER COLUMN Time_Stamp DATETIME2;
+
+-- Change data type of Order_Number to INT
+ALTER TABLE salesdata
+ALTER COLUMN Order_Number INT;
+
+-- Change data type of Customer_No to BIGINT
+UPDATE salesdata
+SET Customer_No = CONVERT(BIGINT, Customer_No, 105);
+
+-- Handle non-numeric values in Customer_No
+UPDATE salesdata
+SET Customer_No = CASE WHEN ISNUMERIC(Customer_No) = 0 THEN '0' ELSE Customer_No END;
+
+ALTER TABLE salesdata
+ALTER COLUMN Customer_No BIGINT;
+```
+
+## Creating Derived Columns
+
+```sql
+-- Correct Delivered_Value column
+UPDATE salesdata
+SET Delivered_Value = (
+    CASE
+        WHEN Delivered_Value = FLOOR(Ordered_Value) OR Delivered_Value = CEILING(Ordered_Value) THEN Ordered_Value
+        ELSE Delivered_Value
+    END
+)
+
+-- Add Undelivered_Value column
+ALTER TABLE salesdata
+ADD Undelivered_Value FLOAT;
+
+UPDATE salesdata
+SET Undelivered_Value = ROUND(ABS((Delivered_Value - Ordered_Value)), 2)
+
+-- Handle NULL values in Undelivered_Value
+UPDATE salesdata
+SET Undelivered_Value = 0 WHERE Undelivered_Value IS NULL;
+```
+
+## Filtering and Subsetting Data
+
+```sql
+-- Drop unnecessary columns
+ALTER TABLE salesdata
+DROP COLUMN Delivered_Amt_without_Sugar_FMCG,
+DROP COLUMN FMCG,
+DROP COLUMN Sugar;
+```
+
+## Data Cleaned and Ready for Analysis
+
+```sql
+-- Check the data
+SELECT * FROM salesdata;
+
+-- View data types and columns
+SELECT
+    COLUMN_NAME,
+    DATA_TYPE,
+    CHARACTER_MAXIMUM_LENGTH,
+    IS_NULLABLE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'salesdata';
+```
+
+------------- Now Data Has Been Cleaned And ready for analysys --------------------
 
 # Time Series Analysis
 
