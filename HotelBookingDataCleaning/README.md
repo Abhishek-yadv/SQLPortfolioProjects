@@ -221,7 +221,7 @@ UPDATE hotel_bookings
 SET is_repeated_guest = CASE WHEN is_repeated_guest = 1 THEN 'Yes' ELSE 'No' END;
 ```
 
-# Notable: throwing an error due to compatibility of column datatype, so we should alter it
+### Notable: throwing an error due to compatibility of column datatype, so we should alter it
 ```
 ALTER TABLE hotel_bookings
 MODIFY COLUMN is_repeated_guest VARCHAR(3);
