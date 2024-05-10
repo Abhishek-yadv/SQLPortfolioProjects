@@ -82,8 +82,22 @@ FROM salesdata
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
+#### Total Order Cancellation order value
+This query retrieves the monthly sales revenue based on the delivered value.
 
-#### Tracking Changes in Cancellation/Undelivered Value Over Time
+```sql
+SELECT 
+    YEAR(Order_Date) AS Year,
+    DATENAME(month, Order_Date) AS Month,
+    ROUND(SUM(Ordered_Value), 2) AS monthly_sales
+FROM salesdata
+WHERE Delivered_Value = 0
+GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
+ORDER BY year, MONTH(Order_Date);
+
+```
+
+#### Tracking Changes in Cancellation Value Over Time
 This query tracks the monthly changes in the undelivered value (cancellations).
 
 ```sql
@@ -93,16 +107,9 @@ SELECT
     ROUND(ABS(SUM(Undelivered_value) - 
 	LAG(SUM(Undelivered_value), 1, 0) OVER (ORDER BY YEAR(Order_Date), MONTH(Order_Date))),2) AS last_monthly_sales
 FROM salesdata
+WHERE Delivered_Value = 0
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY MONTH(Order_Date);
-```
-
-#### View All Data
-This query selects all data from the `salesdata` table.
-
-```sql
-SELECT *
-FROM SALESDATA
 ```
 
 #### Number of Sales Representatives Over Time
