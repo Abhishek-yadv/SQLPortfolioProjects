@@ -147,3 +147,113 @@ FROM SalesData
 GROUP BY DATENAME(month, Order_Date)
 ORDER BY TotalRevenue ASC;
 ```
+
+
+
+# Store Analysis
+
+#### Top-Performing Stores
+This query retrieves the top 10 stores with the highest total sales based on the delivered value.
+
+```sql
+SELECT TOP 10 Store_Name, SUM(delivered_Value) AS TotalSales, Area, ASM
+FROM SalesData
+GROUP BY Store_Name, Area, ASM
+ORDER BY TotalSales DESC;
+```
+
+#### Stores with Most Returned/Cancelled Orders
+This query retrieves the top 10 stores with the highest total undelivered value (cancelled orders).
+
+```sql
+SELECT TOP 10 Store_Name, SUM(Undelivered_Value) AS Total_Undelivered, Area, ASM
+FROM salesdata
+GROUP BY Store_Name, Area, ASM
+ORDER BY Total_Undelivered DESC;
+```
+
+# Area Sales Analysis
+
+#### Total Sales by Area
+This query retrieves the total sales (ordered value) for each area.
+
+```sql
+SELECT Area, ROUND(SUM(Ordered_Value), 2) AS total_sales
+FROM salesdata
+GROUP BY Area
+ORDER BY total_sales DESC;
+```
+
+#### Top-Performing Areas by Total Sales
+This query retrieves the top 10 best-performing areas by total sales (ordered value), along with their sales rank.
+
+```sql
+SELECT TOP 10
+    Area,
+    ROUND(SUM(Ordered_Value), 2) AS total_sales,
+    RANK() OVER (ORDER BY SUM(Ordered_Value) DESC) AS sales_rank
+FROM salesdata
+GROUP BY Area;
+```
+
+#### Worst-Performing Areas by Total Sales
+This query retrieves the top 10 worst-performing areas by total sales (ordered value).
+
+```sql
+SELECT TOP 10 Area, SUM(Ordered_Value) AS total_sales
+FROM salesdata
+GROUP BY Area
+ORDER BY total_sales ASC;
+```
+
+#### Areas with Most Cancellations
+This query retrieves the top 10 areas with the highest total ordered value for undelivered orders (cancellations).
+
+```sql
+SELECT TOP 10 Area, SalesMan, ASM, ROUND(SUM(Ordered_Value), 2) AS Total_ordered
+FROM salesdata
+WHERE delivered_value = 0
+GROUP BY AREA, SalesMan, ASM
+ORDER BY ROUND(SUM(Ordered_Value), 2) DESC;
+```
+
+#### Top Loyal Stores by Delivered Value
+This query retrieves the top 10 stores with the highest total delivered value.
+
+```sql
+SELECT TOP 10 Store_Name, SUM(Delivered_Value) AS total_delivered
+FROM salesdata
+GROUP BY Store_Name
+ORDER BY total_delivered DESC
+```
+
+#### Stores with Most Fake Orders
+This query retrieves the top 10 stores with the highest total ordered value for undelivered orders (fake orders).
+
+```sql
+SELECT TOP 10 Store_Name, ROUND(SUM(Ordered_Value), 2) AS Total_ordered
+FROM salesdata
+WHERE delivered_value = 0
+GROUP BY Store_Name
+ORDER BY ROUND(SUM(Ordered_Value), 2) DESC;
+```
+
+# Sales Representative Analysis
+
+#### Sales Performance by Salesman
+This query retrieves the sales performance of each salesman, including the number of customers, total ordered value, and total delivered value.
+
+```sql
+SELECT
+    s.SalesMan,
+    COUNT(DISTINCT o.Customer_No) AS NumberOfCustomers,
+    SUM(o.Ordered_Value) AS TotalOrderedValue,
+    SUM(o.Delivered_Value) AS TotalDeliveredValue
+FROM salesdata o
+JOIN (
+    SELECT DISTINCT SalesMan
+    FROM salesdata
+) s ON o.SalesMan = s.SalesMan
+GROUP BY s.SalesMan
+ORDER BY TotalOrderedValue DESC;
+```
