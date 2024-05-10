@@ -64,13 +64,13 @@ such as exploring descriptive statistics, building predictive models, or generat
 ## 🔍 Data Investigation
 
 #### Check the structure of the dataset
-```
+```sql
 DESCRIBE hotel_bookings;
 ```
 ![l1](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/2350f381-714d-4b89-9e07-6f5a53129ed9)
 
 #### Checking random data records
-```
+```sql
 SELECT *
 FROM hotel_bookings
 ORDER BY RAND()
@@ -79,14 +79,14 @@ LIMIT 10;
 ![l2](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/7b6e7dc8-b603-4ffe-813e-597daa8fdcef)
 
 #### Rows size in the table
-```
+```sql
 SELECT COUNT(*) AS num_rows
 FROM hotel_bookings;
 ```
 ![l3](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/d660e22b-662f-4f25-afbe-501a690f8e3a)
 
 #### Columns size in the table
-```
+```sql
 SELECT COUNT(*) AS num_columns
 FROM information_schema.columns
 WHERE table_name = 'hotel_bookings';
@@ -105,13 +105,13 @@ WHERE table_name = 'hotel_bookings';
 
 ## 🧼 Data Cleaning
 #### Check the datatype of the dataset
-```
+```sql
 DESCRIBE hotel_bookings;
 ```
 ![l5](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/43beee56-94eb-4c5f-8a99-f93338ba4da4)
 
 #### Checking the null value in column
-```
+```sql
 SET @custom_sql = 'SELECT NULL AS first_row';
 SELECT @custom_sql := CONCAT(@custom_sql, ', SUM(CASE WHEN ', COLUMN_NAME, ' IS NULL THEN 1 ELSE 0 END) AS ', COLUMN_NAME)
 FROM INFORMATION_SCHEMA.COLUMNS
@@ -127,7 +127,7 @@ DEALLOCATE PREPARE stmt;
 
 
 #### Null value column percent
-```
+```sql
 WITH Total_rows AS (SELECT COUNT(*)
 FROM hotel_bookings),
 Total_null AS 
@@ -152,30 +152,30 @@ SELECT (Total_null/Total_rows)*100 ;
 
 #### 1. Convert reservation_status_date from object to datetime.
 
-```
+```sql
 ALTER TABLE hotel_bookings
 MODIFY COLUMN reservation_status_date DATETIME;
 ```
 
 #### 2. Remove rows with null values in `children`, `country`, and `agent` columns.
-```
+```sql
 DELETE FROM hotel_bookings
 WHERE children IS NULL OR country IS NULL OR agent IS NULL;
 ```
 
 #### 3. Drop company column as its null values take up more than 70% of rows:
-```
+```sql
 ALTER TABLE hotel_bookings
 DROP COLUMN company;
 ```
 #### 4. Merge `arrival_date_year`, `arrival_date_month`, `arrival_date_day_of_month` into one `arrival_date` column with datetime datatype.####
 -- Add new column
-```
+```sql
 ALTER TABLE hotel_bookings
 ADD COLUMN arrival_date DATETIME;
 ```
 #### Update arrival_date column
-```
+```sql
 UPDATE hotel_bookings
 SET arrival_date = CONCAT(arrival_date_year, '-', 
                            CASE arrival_date_month
@@ -196,7 +196,7 @@ SET arrival_date = CONCAT(arrival_date_year, '-',
                            arrival_date_day_of_month);
 ```
 #### 5. Drop columns `arrival_date_year`, `arrival_date_month`, `arrival_date_day_of_month`.
-```
+```sql
 ALTER TABLE hotel_bookings
 DROP COLUMN arrival_date_year,
 DROP COLUMN arrival_date_month,
@@ -204,50 +204,49 @@ DROP COLUMN arrival_date_day_of_month
 ```
 
 #### 6. Move the `arrival_date` column to the right side of `lead_time`.
-```
+```sql
 ALTER TABLE hotel_bookings
 CHANGE COLUMN arrival_date arrival_date Datetime AFTER lead_time;
 ```
 
 #### 7. Convert `is_canceled` from numbers to 'Yes' or 'No'.
-```
+```sql
 UPDATE hotel_bookings
 SET is_canceled = CASE WHEN is_canceled = 1 THEN 'Yes' ELSE 'No' END;
 ```
 
 #### 8. Change values in `is_repeated_guest` to 'Yes' or 'No'.
-```
+```sql
 UPDATE hotel_bookings
 SET is_repeated_guest = CASE WHEN is_repeated_guest = 1 THEN 'Yes' ELSE 'No' END;
 ```
 
 ### Notable: throwing an error due to compatibility of column datatype, so we should alter it
-```
+```sql
 ALTER TABLE hotel_bookings
 MODIFY COLUMN is_repeated_guest VARCHAR(3);
 ```
 
 Now let's do it
-```
+```sql
 UPDATE hotel_bookings
 SET is_repeated_guest = CASE WHEN is_repeated_guest = 1 THEN 'Yes' ELSE 'No' END;
 ```
 
 #### 9. Change values in `required_car_parking_spaces` to 'Yes' or 'No'.
-```
+```sql
 ALTER TABLE hotel_bookings
 MODIFY COLUMN required_car_parking_spaces VARCHAR(3);
 ```
 
-```
+```sql
 UPDATE hotel_bookings
 SET required_car_parking_spaces = CASE WHEN required_car_parking_spaces > 0 THEN 'Yes' ELSE 'No' END;
 ```
 
 #### 10. Rename column `adr` to `average_daily_rate`.
 
-```
-
+```sql
 ALTER TABLE hotel_bookings
 RENAME COLUMN adr TO average_daily_rate;
 ```
@@ -263,7 +262,7 @@ ORDER BY RAND()
 LIMIT 10;
 ```
 ![last](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/4546a7fc-b1f4-4953-88c1-4614e169dab9)
-```
+```sql
 DESCRIBE hotel_bookings
 ```
 ![KASCHARALAST3](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/f6360d77-8f9d-416a-9bdb-0b0728137c4c)
