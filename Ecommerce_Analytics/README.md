@@ -60,9 +60,6 @@ The `salesdata` dataset is initially imported as a CSV file into MySQL to begin 
 # Time Series Analysis
 
 #### Sales Revenue Over Time
-```markdown
-This query retrieves the monthly sales revenue based on the ordered value.
-
 ```sql
 SELECT 
     YEAR(Order_Date) AS Year,
