@@ -51,7 +51,97 @@ The datasets is taken from [Superzop](https://www.superzop.com/), a B2B e-commer
 The `salesdata` dataset is initially imported as a CSV file into MySQL to begin the data cleaning process. Throughout the cleaning process, steps taken and any assumptions made are documented to ensure transparency and reproducibility. Once the data cleaning process is complete, the cleaned and transformed dataset will be ready for further analysis, such as exploring descriptive statistics, building predictive models, or generating insights and recommendations for business decision-making.
 
 
+Here's the formatted version with concise descriptions for the provided SQL queries:
 
+```markdown
+# Data Exploration and Understanding
+
+## Checking Table Structure and Data Types
+```sql
+-- Checking table structure and column details
+EXEC sp_columns salesdata;
+
+-- Checking columns and their data types
+SELECT
+    COLUMN_NAME,
+    DATA_TYPE,
+    CHARACTER_MAXIMUM_LENGTH,
+    IS_NULLABLE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'salesdata';
+```
+
+## Checking Data Sample
+```sql
+-- Retrieving a sample of data
+SELECT TOP 10 *
+FROM salesdata
+ORDER BY NEWID();
+```
+
+## Handling Missing/Null Values
+```sql
+-- Checking for missing/null values
+SELECT
+    SUM(CASE WHEN Store_ID IS NULL THEN 1 ELSE 0 END) AS store_ids,
+    SUM(CASE WHEN Store_Name IS NULL THEN 1 ELSE 0 END) AS names,
+    SUM(CASE WHEN Area IS NULL THEN 1 ELSE 0 END) AS areas,
+    SUM(CASE WHEN ASM IS NULL THEN 1 ELSE 0 END) AS asm,
+    SUM(CASE WHEN DASM IS NULL THEN 1 ELSE 0 END) AS dasm,
+    SUM(CASE WHEN SalesMan IS NULL THEN 1 ELSE 0 END) AS salesmen,
+    SUM(CASE WHEN Customer_No IS NULL THEN 1 ELSE 0 END) AS customer_nos,
+    SUM(CASE WHEN Order_Number IS NULL THEN 1 ELSE 0 END) AS order_numbers,
+    SUM(CASE WHEN Order_Date IS NULL THEN 1 ELSE 0 END) AS order_dates,
+    SUM(CASE WHEN TimeStamp IS NULL THEN 1 ELSE 0 END) AS timestamps,
+    SUM(CASE WHEN Ordered_Value IS NULL THEN 1 ELSE 0 END) AS ordered_values,
+    SUM(CASE WHEN Delivered_Value IS NULL THEN 1 ELSE 0 END) AS delivered_values,
+    SUM(CASE WHEN Sugar IS NULL THEN 1 ELSE 0 END) AS sugar,
+    SUM(CASE WHEN FMCG IS NULL THEN 1 ELSE 0 END) AS fmcg,
+    SUM(CASE WHEN Delivered_Amt_without_Sugar_FMCG IS NULL THEN 1 ELSE 0 END) AS null_delivered_amt_without_sugar_fmcg
+FROM salesdata;
+```
+
+## Identifying Unique Values in Categorical Columns
+```sql
+-- Retrieving distinct values from categorical columns
+SELECT DISTINCT Area FROM salesdata;
+SELECT DISTINCT ASM FROM salesdata;
+SELECT DISTINCT DASM FROM salesdata;
+SELECT DISTINCT SalesMan FROM salesdata;
+```
+
+## Table Size and Date Range
+```sql
+-- Counting the number of rows
+SELECT COUNT(*) AS num_rows
+FROM salesdata;
+
+-- Counting the number of columns
+SELECT COUNT(*) AS num_columns
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'salesdata';
+
+-- Retrieving the date range of the data
+SELECT MAX(Order_Date), MIN(Order_Date)
+FROM salesdata;
+```
+
+## Observations and Conclusions
+
+- The column DASM has around 40% null values, which may represent cases where a District Area Sales Manager is not available, and the Regional Sales Manager (RSM) handles the responsibility.
+- Replace NULL values in the DASM column with 'RSM' (Regional Sales Manager).
+- Change the data type of the Order_Date column to DATE.
+- Change the data type of the Customer_No column to DATETIME2.
+- Change the data type of the TimeStamp column to DATETIME2.
+- Change the data type of the Customer_Number column to INTEGER.
+- Rename the TimeStamp column to avoid conflicts with the reserved word 'TIMESTAMP' in SQL Server.
+- The values in the Order_Number column need to be split because they contain both the Store ID and Order Number, separated by a delimiter '/'.
+- The Order_Number column should be of the INTEGER data type instead of VARCHAR.
+- The Area column could be merged into one entity rather than separating it into east, west, south, or north, but the company has already fixed it based on the potential business.
+- The Delivered_Value is sometimes higher than the Ordered_Value due to manual data entry by drivers, and this needs to be fixed.
+- The Order_Amount for Sugar and FMCG (other than staples and dry fruits) is very low and frequently contains zeros, which could be avoided as it is not the company's core product and has a low profit margin.
+- The analysis will focus on overall sales, which is the company's core business (staples).
+- The dataset contains 12,740 rows and 15 columns, spanning the date range from 01-02-2023 to 31-10-2023.
 
 
 
