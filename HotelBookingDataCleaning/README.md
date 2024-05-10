@@ -169,7 +169,7 @@ ALTER TABLE hotel_bookings
 DROP COLUMN company;
 ```
 #### 4. Merge `arrival_date_year`, `arrival_date_month`, `arrival_date_day_of_month` into one `arrival_date` column with datetime datatype.####
--- Add new column
+Add new column
 ```sql
 ALTER TABLE hotel_bookings
 ADD COLUMN arrival_date DATETIME;
