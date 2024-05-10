@@ -124,8 +124,7 @@ FROM salesdata;
 ```
 ## Handling Duplicates 🚫
 ```sql
-    SELECT
-    Store_ID,
+SELECT Store_ID,
     Order_Number,
     COUNT(*) AS duplicate_count
 FROM salesdata
