@@ -53,7 +53,7 @@ The `salesdata` dataset is initially imported as a CSV file into MySQL to begin 
 
 # Data Investigation 
 
-## Checking Table Structure and Data Types
+### Checking Table Structure and Data Types
 ```sql
 -- Checking table structure and column details
 EXEC sp_columns salesdata;
@@ -68,7 +68,7 @@ FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
 ```
 
-## Checking Data Sample
+### Checking Data Sample
 ```sql
 -- Sample Checking
 SELECT TOP 10 *
@@ -76,7 +76,7 @@ FROM salesdata
 ORDER BY NEWID();
 ```
 
-## Identifying Unique Values in Categorical Columns
+### Identifying Unique Values in Categorical Columns
 ```sql
 -- Retrieving distinct values from categorical columns
 SELECT DISTINCT Area FROM salesdata;
@@ -85,7 +85,7 @@ SELECT DISTINCT DASM FROM salesdata;
 SELECT DISTINCT SalesMan FROM salesdata;
 ```
 
-## Table Size and Date Range
+### Table Size and Date Range
 ```sql
 -- Counting the number of rows
 SELECT COUNT(*) AS num_rows
@@ -101,7 +101,7 @@ SELECT MAX(Order_Date), MIN(Order_Date)
 FROM salesdata;
 ```
 
-## Handling Missing Values
+# Handling Missing Values
 ```sql
 -- Checking for missing/null values
 SELECT
@@ -122,7 +122,8 @@ SELECT
     SUM(CASE WHEN Delivered_Amt_without_Sugar_FMCG IS NULL THEN 1 ELSE 0 END) AS null_delivered_amt_without_sugar_fmcg
 FROM salesdata;
 ```
-## Handling Duplicates 🚫
+
+# Handling Duplicates 🚫
 ```sql
 SELECT Store_ID,
     Order_Number,
@@ -133,7 +134,7 @@ HAVING COUNT(*) > 1
 ORDER BY duplicate_count DESC;
 ```
 
-## Observations and Conclusions
+### Observations and Conclusions
 
 - The column DASM has around 40% null values, which may represent cases where a District Area Sales Manager is not available, and the Regional Sales Manager (RSM) handles the responsibility.
 - Replace NULL values in the DASM column with 'RSM' (Regional Sales Manager).
@@ -152,7 +153,7 @@ ORDER BY duplicate_count DESC;
 
 Here's the formatted version with concise descriptions for the data preprocessing queries:
 
-## Handling Inconsistent Data
+# Handling Inconsistent Data
 ```markdown
 
 ```sql
@@ -164,7 +165,7 @@ UPDATE salesdata
 SET Order_Number = SUBSTRING(Order_Number, CHARINDEX('/', Order_Number) + 1, LEN(Order_Number));
 ```
 
-## Standardizing Data Formats
+# Standardizing Data Formats
 
 ```sql
 -- Convert Order_Date data type to DATE
@@ -197,7 +198,7 @@ ALTER TABLE salesdata
 ALTER COLUMN Customer_No BIGINT;
 ```
 
-## Creating Derived Columns
+# Creating Derived Columns
 
 ```sql
 -- Correct Delivered_Value column
@@ -221,7 +222,7 @@ UPDATE salesdata
 SET Undelivered_Value = 0 WHERE Undelivered_Value IS NULL;
 ```
 
-## Filtering and Subsetting Data
+# Filtering and Subsetting Data
 
 ```sql
 -- Drop unnecessary columns
@@ -231,7 +232,7 @@ DROP COLUMN FMCG,
 DROP COLUMN Sugar;
 ```
 
-## Data Cleaned and Ready for Analysis
+# Data Validation
 
 ```sql
 -- Check the data
@@ -247,7 +248,7 @@ FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
 ```
 
-------------- Now Data Has Been Cleaned And ready for analysys --------------------
+---------------------------- Now Data Has Been Cleaned And ready for analysys ----------------------------
 
 # Time Series Analysis
 
