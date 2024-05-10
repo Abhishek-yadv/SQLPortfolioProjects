@@ -49,3 +49,107 @@ The datasets is taken from [Superzop](https://www.superzop.com/), a B2B e-commer
 - Use SQL queries to identify and handle outliers or invalid data points.
 
 The `salesdata` dataset is initially imported as a CSV file into MySQL to begin the data cleaning process. Throughout the cleaning process, steps taken and any assumptions made are documented to ensure transparency and reproducibility. Once the data cleaning process is complete, the cleaned and transformed dataset will be ready for further analysis, such as exploring descriptive statistics, building predictive models, or generating insights and recommendations for business decision-making.
+
+
+
+
+
+
+
+
+
+Sure, here's the markdown formatting with proper descriptions for the first part of the SQL queries:
+
+```markdown
+# Time Series Analysis
+
+## Sales Revenue Over Time
+This query retrieves the monthly sales revenue based on the ordered value.
+
+```sql
+SELECT 
+    YEAR(Order_Date) AS Year,
+    DATENAME(month, Order_Date) AS Month,
+    ROUND(SUM(Ordered_Value), 2) AS monthly_sales
+FROM salesdata
+GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
+ORDER BY year, MONTH(Order_Date);
+```
+
+## Sales Revenue by Delivered Value Over Time
+This query retrieves the monthly sales revenue based on the delivered value.
+
+```sql
+SELECT 
+    YEAR(Order_Date) AS Year,
+    DATENAME(month, Order_Date) AS Month,
+    ROUND(SUM(Delivered_Value), 2) AS monthly_sales
+FROM salesdata
+GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
+ORDER BY year, MONTH(Order_Date);
+```
+
+## Tracking Changes in Cancellation/Undelivered Value Over Time
+This query tracks the monthly changes in the undelivered value (cancellations).
+
+```sql
+SELECT 
+    YEAR(Order_Date) AS Year,
+    DATENAME(month, Order_Date) AS Month,
+    ROUND(ABS(SUM(Undelivered_value) - 
+	LAG(SUM(Undelivered_value), 1, 0) OVER (ORDER BY YEAR(Order_Date), MONTH(Order_Date))),2) AS last_monthly_sales
+FROM salesdata
+GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
+ORDER BY MONTH(Order_Date);
+```
+
+## View All Data
+This query selects all data from the `salesdata` table.
+
+```sql
+SELECT *
+FROM SALESDATA
+```
+
+## Number of Sales Representatives Over Time
+This query retrieves the number of distinct sales representatives for each month.
+
+```sql
+SELECT 
+    YEAR(Order_Date) AS Year,
+    DATENAME(month, Order_Date) AS Month,
+    COUNT(DISTINCT SalesMan) AS Number_Of_Salesmans
+FROM salesdata
+GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
+ORDER BY year, MONTH(Order_Date);
+```
+
+## Days with Highest Sales Value Over Time
+This query retrieves the top 10 days with the highest sales value based on the ordered value.
+
+```
+SELECT Top 10 Order_Date, ROUND(SUM(Ordered_Value),2) AS TotalRevenue
+FROM SalesData
+GROUP BY Order_Date
+ORDER BY TotalRevenue DESC;
+```
+
+## Months with Highest Sales
+This query retrieves the top 3 months with the highest sales based on the ordered value.
+
+```
+SELECT TOP 3 DATENAME(month, Order_Date) AS Month, ROUND(SUM(Ordered_Value), 2) AS TotalRevenue
+FROM SalesData
+GROUP BY DATENAME(month, Order_Date)
+ORDER BY TotalRevenue DESC;
+```
+
+## Months with Lowest Sales
+This query retrieves the top 3 months with the lowest sales based on the ordered value.
+
+```
+SELECT TOP 3 DATENAME(month, Order_Date) AS Month, ROUND(SUM(Ordered_Value), 2) AS TotalRevenue
+FROM SalesData
+GROUP BY DATENAME(month, Order_Date)
+ORDER BY TotalRevenue ASC;
+```
