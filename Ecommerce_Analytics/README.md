@@ -51,7 +51,7 @@ The datasets is taken from [Superzop](https://www.superzop.com/), a B2B e-commer
 The `salesdata` dataset is initially imported as a CSV file into MySQL to begin the data cleaning process. Throughout the cleaning process, steps taken and any assumptions made are documented to ensure transparency and reproducibility. Once the data cleaning process is complete, the cleaned and transformed dataset will be ready for further analysis, such as exploring descriptive statistics, building predictive models, or generating insights and recommendations for business decision-making.
 
 
-# Data Investigation 
+## Data Investigation 
 
 ### Checking Table Structure and Data Types
 ```sql
@@ -101,7 +101,7 @@ SELECT MAX(Order_Date), MIN(Order_Date)
 FROM salesdata;
 ```
 
-# Handling Missing Values
+## Handling Missing Values
 ```sql
 -- Checking for missing/null values
 SELECT
@@ -123,7 +123,7 @@ SELECT
 FROM salesdata;
 ```
 
-# Handling Duplicates 🚫
+## Handling Duplicates 🚫
 ```sql
 SELECT Store_ID,
     Order_Number,
@@ -153,7 +153,7 @@ ORDER BY duplicate_count DESC;
 
 Here's the formatted version with concise descriptions for the data preprocessing queries:
 
-# Handling Inconsistent Data
+## Handling Inconsistent Data
 ```markdown
 
 ```sql
@@ -165,7 +165,7 @@ UPDATE salesdata
 SET Order_Number = SUBSTRING(Order_Number, CHARINDEX('/', Order_Number) + 1, LEN(Order_Number));
 ```
 
-# Standardizing Data Formats
+## Standardizing Data Formats
 
 ```sql
 -- Convert Order_Date data type to DATE
@@ -198,7 +198,7 @@ ALTER TABLE salesdata
 ALTER COLUMN Customer_No BIGINT;
 ```
 
-# Creating Derived Columns
+## Creating Derived Columns
 
 ```sql
 -- Correct Delivered_Value column
@@ -222,7 +222,7 @@ UPDATE salesdata
 SET Undelivered_Value = 0 WHERE Undelivered_Value IS NULL;
 ```
 
-# Filtering and Subsetting Data
+## Filtering and Subsetting Data
 
 ```sql
 -- Drop unnecessary columns
@@ -232,7 +232,7 @@ DROP COLUMN FMCG,
 DROP COLUMN Sugar;
 ```
 
-# Data Validation
+## Data Validation
 
 ```sql
 -- Check the data
