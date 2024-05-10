@@ -23,15 +23,15 @@ The datasets is taken from [Superzop](https://www.superzop.com/), a B2B e-commer
 - Identify duplicate rows based on a combination of relevant columns.
 - Use SQL queries with window functions or common table expressions (CTEs) to identify and remove duplicate rows.
 
-## Standardizing Data Formats 📅
-
-- Ensure that date, time, and other formatted columns are consistent across the dataset.
-- Convert data types and formats using SQL functions (e.g., CONVERT, CAST, FORMAT).
-
 ## Handling Inconsistent Data 🔄
 
 - Identify columns with inconsistent data (e.g., different spellings, abbreviations, or capitalization).
 - Use SQL queries with CASE statements, string functions, or regular expressions to standardize inconsistent data.
+
+## Standardizing Data Formats 📅
+
+- Ensure that date, time, and other formatted columns are consistent across the dataset.
+- Convert data types and formats using SQL functions (e.g., CONVERT, CAST, FORMAT).
 
 ## Creating Derived Columns ➕
 
@@ -79,28 +79,6 @@ FROM salesdata
 ORDER BY NEWID();
 ```
 
-## Handling Missing Values
-```sql
--- Checking for missing/null values
-SELECT
-    SUM(CASE WHEN Store_ID IS NULL THEN 1 ELSE 0 END) AS store_ids,
-    SUM(CASE WHEN Store_Name IS NULL THEN 1 ELSE 0 END) AS names,
-    SUM(CASE WHEN Area IS NULL THEN 1 ELSE 0 END) AS areas,
-    SUM(CASE WHEN ASM IS NULL THEN 1 ELSE 0 END) AS asm,
-    SUM(CASE WHEN DASM IS NULL THEN 1 ELSE 0 END) AS dasm,
-    SUM(CASE WHEN SalesMan IS NULL THEN 1 ELSE 0 END) AS salesmen,
-    SUM(CASE WHEN Customer_No IS NULL THEN 1 ELSE 0 END) AS customer_nos,
-    SUM(CASE WHEN Order_Number IS NULL THEN 1 ELSE 0 END) AS order_numbers,
-    SUM(CASE WHEN Order_Date IS NULL THEN 1 ELSE 0 END) AS order_dates,
-    SUM(CASE WHEN TimeStamp IS NULL THEN 1 ELSE 0 END) AS timestamps,
-    SUM(CASE WHEN Ordered_Value IS NULL THEN 1 ELSE 0 END) AS ordered_values,
-    SUM(CASE WHEN Delivered_Value IS NULL THEN 1 ELSE 0 END) AS delivered_values,
-    SUM(CASE WHEN Sugar IS NULL THEN 1 ELSE 0 END) AS sugar,
-    SUM(CASE WHEN FMCG IS NULL THEN 1 ELSE 0 END) AS fmcg,
-    SUM(CASE WHEN Delivered_Amt_without_Sugar_FMCG IS NULL THEN 1 ELSE 0 END) AS null_delivered_amt_without_sugar_fmcg
-FROM salesdata;
-```
-
 ## Identifying Unique Values in Categorical Columns
 ```sql
 Retrieving distinct values from categorical columns
@@ -123,6 +101,28 @@ WHERE TABLE_NAME = 'salesdata';
 
 Retrieving the date range of the data
 SELECT MAX(Order_Date), MIN(Order_Date)
+FROM salesdata;
+```
+
+## Handling Missing Values
+```sql
+-- Checking for missing/null values
+SELECT
+    SUM(CASE WHEN Store_ID IS NULL THEN 1 ELSE 0 END) AS store_ids,
+    SUM(CASE WHEN Store_Name IS NULL THEN 1 ELSE 0 END) AS names,
+    SUM(CASE WHEN Area IS NULL THEN 1 ELSE 0 END) AS areas,
+    SUM(CASE WHEN ASM IS NULL THEN 1 ELSE 0 END) AS asm,
+    SUM(CASE WHEN DASM IS NULL THEN 1 ELSE 0 END) AS dasm,
+    SUM(CASE WHEN SalesMan IS NULL THEN 1 ELSE 0 END) AS salesmen,
+    SUM(CASE WHEN Customer_No IS NULL THEN 1 ELSE 0 END) AS customer_nos,
+    SUM(CASE WHEN Order_Number IS NULL THEN 1 ELSE 0 END) AS order_numbers,
+    SUM(CASE WHEN Order_Date IS NULL THEN 1 ELSE 0 END) AS order_dates,
+    SUM(CASE WHEN TimeStamp IS NULL THEN 1 ELSE 0 END) AS timestamps,
+    SUM(CASE WHEN Ordered_Value IS NULL THEN 1 ELSE 0 END) AS ordered_values,
+    SUM(CASE WHEN Delivered_Value IS NULL THEN 1 ELSE 0 END) AS delivered_values,
+    SUM(CASE WHEN Sugar IS NULL THEN 1 ELSE 0 END) AS sugar,
+    SUM(CASE WHEN FMCG IS NULL THEN 1 ELSE 0 END) AS fmcg,
+    SUM(CASE WHEN Delivered_Amt_without_Sugar_FMCG IS NULL THEN 1 ELSE 0 END) AS null_delivered_amt_without_sugar_fmcg
 FROM salesdata;
 ```
 
