@@ -261,7 +261,9 @@ SELECT *
 FROM hotel_bookings
 ORDER BY RAND()
 LIMIT 10;
-
+```
+![last](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/4546a7fc-b1f4-4953-88c1-4614e169dab9)
+```
 DESCRIBE hotel_bookings
 ```
 
