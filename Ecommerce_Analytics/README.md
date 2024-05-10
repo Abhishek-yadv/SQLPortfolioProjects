@@ -53,8 +53,8 @@ The `salesdata` dataset is initially imported as a CSV file into MySQL to begin 
 
 Here's the formatted version with concise descriptions for the provided SQL queries:
 
-```markdown
-# Data Exploration and Understanding
+
+# Data Investigation 👀
 
 ## Checking Table Structure and Data Types
 ```sql
@@ -79,7 +79,7 @@ FROM salesdata
 ORDER BY NEWID();
 ```
 
-## Handling Missing/Null Values
+## Handling Missing Values
 ```sql
 -- Checking for missing/null values
 SELECT
@@ -103,7 +103,7 @@ FROM salesdata;
 
 ## Identifying Unique Values in Categorical Columns
 ```sql
--- Retrieving distinct values from categorical columns
+Retrieving distinct values from categorical columns
 SELECT DISTINCT Area FROM salesdata;
 SELECT DISTINCT ASM FROM salesdata;
 SELECT DISTINCT DASM FROM salesdata;
@@ -112,16 +112,16 @@ SELECT DISTINCT SalesMan FROM salesdata;
 
 ## Table Size and Date Range
 ```sql
--- Counting the number of rows
+Counting the number of rows
 SELECT COUNT(*) AS num_rows
 FROM salesdata;
 
--- Counting the number of columns
+Counting the number of columns
 SELECT COUNT(*) AS num_columns
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
 
--- Retrieving the date range of the data
+Retrieving the date range of the data
 SELECT MAX(Order_Date), MIN(Order_Date)
 FROM salesdata;
 ```
