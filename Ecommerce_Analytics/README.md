@@ -73,7 +73,7 @@ WHERE TABLE_NAME = 'salesdata';
 
 ## Checking Data Sample
 ```sql
--- Retrieving a sample of data
+-- Sample Checking
 SELECT TOP 10 *
 FROM salesdata
 ORDER BY NEWID();
@@ -81,7 +81,7 @@ ORDER BY NEWID();
 
 ## Identifying Unique Values in Categorical Columns
 ```sql
-Retrieving distinct values from categorical columns
+-- Retrieving distinct values from categorical columns
 SELECT DISTINCT Area FROM salesdata;
 SELECT DISTINCT ASM FROM salesdata;
 SELECT DISTINCT DASM FROM salesdata;
@@ -90,16 +90,16 @@ SELECT DISTINCT SalesMan FROM salesdata;
 
 ## Table Size and Date Range
 ```sql
-Counting the number of rows
+-- Counting the number of rows
 SELECT COUNT(*) AS num_rows
 FROM salesdata;
 
-Counting the number of columns
+-- Counting the number of columns
 SELECT COUNT(*) AS num_columns
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
 
-Retrieving the date range of the data
+-- Retrieving the date range of the data
 SELECT MAX(Order_Date), MIN(Order_Date)
 FROM salesdata;
 ```
