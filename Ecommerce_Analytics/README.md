@@ -53,7 +53,7 @@ The `salesdata` dataset is initially imported as a CSV file into MySQL to begin 
 
 ## Data Investigation 
 
-### Checking Table Structure and Data Types
+#### Checking Table Structure and Data Types
 ```sql
 -- Checking table structure and column details
 EXEC sp_columns salesdata;
@@ -68,7 +68,7 @@ FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
 ```
 
-### Checking Data Sample
+#### Checking Data Sample
 ```sql
 -- Sample Checking
 SELECT TOP 10 *
@@ -76,7 +76,7 @@ FROM salesdata
 ORDER BY NEWID();
 ```
 
-### Identifying Unique Values in Categorical Columns
+#### Identifying Unique Values in Categorical Columns
 ```sql
 -- Retrieving distinct values from categorical columns
 SELECT DISTINCT Area FROM salesdata;
@@ -85,7 +85,7 @@ SELECT DISTINCT DASM FROM salesdata;
 SELECT DISTINCT SalesMan FROM salesdata;
 ```
 
-### Table Size and Date Range
+#### Table Size and Date Range
 ```sql
 -- Counting the number of rows
 SELECT COUNT(*) AS num_rows
