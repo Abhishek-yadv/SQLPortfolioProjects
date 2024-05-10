@@ -266,5 +266,6 @@ LIMIT 10;
 ```
 DESCRIBE hotel_bookings
 ```
+![KASCHARALAST3](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/f6360d77-8f9d-416a-9bdb-0b0728137c4c)
 
 🎉 Now this Dataset has been cleaned and transformed 🚀
