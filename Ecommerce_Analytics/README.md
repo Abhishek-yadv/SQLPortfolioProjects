@@ -271,7 +271,7 @@ GROUP BY SalesMan
 ORDER BY total_sales DESC;
 ```
 
-## Sales Representatives with Highest Cancellations
+#### Sales Representatives with Highest Cancellations
 This query retrieves the top 10 sales representatives with the highest total undelivered value (cancellations).
 
 ```sql
@@ -281,7 +281,7 @@ GROUP BY SalesMan
 ORDER BY Undeliver_value DESC;
 ```
 
-## Loss-Making Sales Representatives
+#### Loss-Making Sales Representatives
 This query retrieves the top 10 sales representatives with the highest total undelivered value (cancellations) and whose delivered value is below the average.
 
 ```sql
@@ -292,7 +292,7 @@ HAVING delivered_Value < (SELECT ROUND(AVG(delivered_Value), 2) FROM Salesdata)
 ORDER BY Undeliver_value DESC;
 ```
 
-## Sales Representatives with Most Fake Orders
+#### Sales Representatives with Most Fake Orders
 This query retrieves the top 10 sales representatives with the highest total ordered value for undelivered orders (fake orders).
 
 ```sql
@@ -303,7 +303,7 @@ GROUP BY SalesMan, ASM
 ORDER BY ROUND(SUM(Ordered_Value), 2) DESC;
 ```
 
-## Best-Performing Area Sales Managers (ASMs)
+#### Best-Performing Area Sales Managers (ASMs)
 This query retrieves the best-performing area sales managers (ASMs) based on the total ordered value and delivered value, along with the number of salesmen under each ASM.
 
 ```sql
@@ -319,7 +319,7 @@ ORDER BY TotalOrderedValue DESC;
 
 # Sales Distribution and Outliers
 
-## Sales Distribution of Order Values
+#### Sales Distribution of Order Values
 This query calculates the first quartile (Q1), median, and third quartile (Q3) of the ordered values.
 
 ```sql
@@ -330,7 +330,7 @@ SELECT
 FROM salesdata;
 ```
 
-## Outliers in Delivered Values
+#### Outliers in Delivered Values
 This query identifies the order numbers and delivered values that are outliers (more than 20 standard deviations above the mean).
 
 ```sql
