@@ -257,3 +257,90 @@ JOIN (
 GROUP BY s.SalesMan
 ORDER BY TotalOrderedValue DESC;
 ```
+
+Here's the continuation of the markdown formatting with descriptions for the remaining SQL queries:
+
+```markdown
+## Top-Performing Sales Representatives by Ordered Value
+This query retrieves the top 10 sales representatives with the highest total sales based on the delivered value.
+
+```sql
+SELECT TOP 10 SalesMan, ROUND(SUM(Delivered_Value), 2) AS total_sales
+FROM salesdata
+GROUP BY SalesMan
+ORDER BY total_sales DESC;
+```
+
+## Sales Representatives with Highest Cancellations
+This query retrieves the top 10 sales representatives with the highest total undelivered value (cancellations).
+
+```sql
+SELECT TOP 10 SalesMan, ROUND(SUM(Undelivered_Value), 2) AS Undeliver_value
+FROM salesdata
+GROUP BY SalesMan
+ORDER BY Undeliver_value DESC;
+```
+
+## Loss-Making Sales Representatives
+This query retrieves the top 10 sales representatives with the highest total undelivered value (cancellations) and whose delivered value is below the average.
+
+```sql
+SELECT TOP 10 SalesMan, ROUND(SUM(Undelivered_Value), 2) AS Undeliver_value
+FROM salesdata
+GROUP BY SalesMan
+HAVING delivered_Value < (SELECT ROUND(AVG(delivered_Value), 2) FROM Salesdata)
+ORDER BY Undeliver_value DESC;
+```
+
+## Sales Representatives with Most Fake Orders
+This query retrieves the top 10 sales representatives with the highest total ordered value for undelivered orders (fake orders).
+
+```sql
+SELECT TOP 10 SalesMan, ASM, ROUND(SUM(Ordered_Value), 2) AS Total_ordered
+FROM salesdata
+WHERE delivered_value = 0
+GROUP BY SalesMan, ASM
+ORDER BY ROUND(SUM(Ordered_Value), 2) DESC;
+```
+
+## Best-Performing Area Sales Managers (ASMs)
+This query retrieves the best-performing area sales managers (ASMs) based on the total ordered value and delivered value, along with the number of salesmen under each ASM.
+
+```sql
+SELECT
+    ASM,
+    COUNT(DISTINCT SalesMan) AS NumberOfSalesmen,
+    SUM(Ordered_Value) AS TotalOrderedValue,
+    SUM(Delivered_Value) AS TotalDeliveredValue
+FROM salesdata
+GROUP BY ASM
+ORDER BY TotalOrderedValue DESC;
+```
+
+# Sales Distribution and Outliers
+
+## Sales Distribution of Order Values
+This query calculates the first quartile (Q1), median, and third quartile (Q3) of the ordered values.
+
+```sql
+SELECT 
+    PERCENTILE_DISC(0.25) WITHIN GROUP (ORDER BY Ordered_Value) OVER() AS Q1,
+    PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY Ordered_Value) OVER() AS median,
+    PERCENTILE_DISC(0.75) WITHIN GROUP (ORDER BY Ordered_Value) OVER() AS Q3
+FROM salesdata;
+```
+
+## Outliers in Delivered Values
+This query identifies the order numbers and delivered values that are outliers (more than 20 standard deviations above the mean).
+
+```sql
+DECLARE @AvgDeliveredValue FLOAT, @StdevDeliveredValue FLOAT;
+
+SELECT @AvgDeliveredValue = AVG(Delivered_Value),
+       @StdevDeliveredValue = STDEV(Delivered_Value)
+FROM salesdata;
+
+SELECT Order_Number, Delivered_Value
+FROM salesdata
+WHERE Delivered_Value > @AvgDeliveredValue + 20 * @StdevDeliveredValue;
+```
