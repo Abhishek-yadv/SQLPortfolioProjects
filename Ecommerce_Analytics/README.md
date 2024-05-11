@@ -48,7 +48,7 @@ The datasets is taken from [Superzop](https://www.superzop.com/), a B2B e-commer
 - Implement checks and constraints to ensure data integrity and validity.
 - Use SQL queries to identify and handle outliers or invalid data points.
 
-The `salesdata` dataset is initially imported as a CSV file into MySQL to begin the data cleaning process. Throughout the cleaning process, steps taken and any assumptions made are documented to ensure transparency and reproducibility. Once the data cleaning process is complete, the cleaned and transformed dataset will be ready for further analysis, such as exploring descriptive statistics, building predictive models, or generating insights and recommendations for business decision-making.
+The `salesdata` dataset is initially imported as a CSV file into MSSQL SERVER to begin the data cleaning process. Throughout the cleaning process, steps taken and any assumptions made are documented to ensure transparency and reproducibility. Once the data cleaning process is complete, the cleaned and transformed dataset will be ready for further analysis, such as exploring descriptive statistics, building predictive models, or generating insights and recommendations for business decision-making.
 
 
 ## Data Investigation 
@@ -150,8 +150,6 @@ ORDER BY duplicate_count DESC;
 - The Order_Amount for Sugar and FMCG (other than staples and dry fruits) is very low and frequently contains zeros, which could be avoided as it is not the company's core product and has a low profit margin.
 - The analysis will focus on overall sales, which is the company's core business (staples).
 - The dataset contains 12,740 rows and 15 columns, spanning the date range from 01-02-2023 to 31-10-2023.
-
-Here's the formatted version with concise descriptions for the data preprocessing queries:
 
 ## Handling Inconsistent Data
 ```markdown
