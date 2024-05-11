@@ -48,7 +48,7 @@ The datasets is taken from [Superzop](https://www.superzop.com/), a B2B e-commer
 - Implement checks and constraints to ensure data integrity and validity.
 - Use SQL queries to identify and handle outliers or invalid data points.
 
-The `salesdata` dataset is initially imported as a CSV file into MSSQL SERVER to begin the data cleaning process. Throughout the cleaning process, steps taken and any assumptions made are documented to ensure transparency and reproducibility. Once the data cleaning process is complete, the cleaned and transformed dataset will be ready for further analysis, such as exploring descriptive statistics, building predictive models, or generating insights and recommendations for business decision-making.
+The `salesdata` dataset is initially imported as a CSV file into MSSQL SERVER to begin the data cleaning process. Throughout the cleaning process, steps taken and any assumptions made are step wise documented to for better readability. Once the data cleaning process is complete, the cleaned and transformed dataset will be ready for further analysis, such as sales analysis across area, sales representatives, stores, ASM and recommendations for business decision-making.
 
 
 ## Data Investigation 
