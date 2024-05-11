@@ -3,7 +3,7 @@
 
 The data cleaning process for the `salesdata` table involves several steps to ensure the data is accurate, consistent, and ready for analysis. Below is full description about the steps I have taken throughout in this process:
 
-Datasets Overview:
+Overview Of Datasets:
 The datasets is taken from [Superzop](https://www.superzop.com/), a B2B e-commerce startup revolutionizing staples procurement and have mission to directly source staples from farmers and mills for B2B customers like small retailers and restaurants.This datasets include details on stores, customers, and orders,date,ASM,DSM,area and more.. 
 
 ## Data Investigation 👀
