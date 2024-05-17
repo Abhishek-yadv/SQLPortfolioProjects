@@ -244,48 +244,69 @@ WHERE TABLE_NAME = 'salesdata';
 
 ---------------------------- Now Data Has Been Cleaned And ready for analysis ----------------------------
 
-# Time Series Analysis
+Sure! Here's the README markdown file based on the provided SQL queries:
 
-#### Sales Revenue Over Time
+```markdown
+# Sales Analysis Overview
+
+## Quick Overview and Summary
+
+```sql
+SELECT 
+    ROUND(SUM(Ordered_Value), 2) AS Total_Ordered,
+	ROUND(SUM(Delivered_Value), 2) AS Total_Delivered_Value,
+	ROUND(SUM(Undelivered_value), 2) AS Total_Undelivered_values
+FROM salesdata;
+```
+
+This query provides a summary of total ordered, delivered, and undelivered values. Additionally:
+
+```sql
+-- Total FakeOrder value
+SELECT 
+    ROUND(SUM(Ordered_Value), 2) AS Total_Cancellation
+FROM salesdata
+WHERE Delivered_Value = 0;
+```
+
+Conclusion: Overall revenue is 787612350.92. Delivered value is 648748741.47 and Undelivered value is 124733011.7, in which 58674265.11 is Faked Ordered value.
+
+## Time Series Analysis
+
+### Sales Performance Over Time
+
 ```sql
 SELECT 
     YEAR(Order_Date) AS Year,
     DATENAME(month, Order_Date) AS Month,
-    ROUND(SUM(Ordered_Value), 2) AS monthly_sales
+    ROUND(SUM(Ordered_Value), 2) AS monthly_sales,
+    ROUND(SUM(Delivered_Value), 2) AS Delivered_Value_sales,
+    ROUND(SUM(Undelivered_value), 2) AS Undelivered_value_sales,
+	Rank() OVER (Order BY SUM(Ordered_Value) DESC) AS RN
 FROM salesdata
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
 
-#### Sales Revenue by Delivered Value Over Time
-This query retrieves the monthly sales revenue based on the delivered value.
+Conclusion: In The month of March, highest sales followed by May, September has the least followed by December.
+
+### Tracking changes in Cancellation 
 
 ```sql
 SELECT 
     YEAR(Order_Date) AS Year,
     DATENAME(month, Order_Date) AS Month,
-    ROUND(SUM(Delivered_Value), 2) AS monthly_sales
-FROM salesdata
-GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
-ORDER BY year, MONTH(Order_Date);
-```
-#### Total Order Cancellation order value
-This query retrieves the monthly sales revenue based on the delivered value.
-
-```sql
-SELECT 
-    YEAR(Order_Date) AS Year,
-    DATENAME(month, Order_Date) AS Month,
-    ROUND(SUM(Ordered_Value), 2) AS monthly_sales
+    ROUND(SUM(Ordered_Value), 2) AS Cancelled_order,
+	RANK() OVER(ORDER BY SUM(Ordered_Value)) AS RN
 FROM salesdata
 WHERE Delivered_Value = 0
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
-
 ```
 
-#### Tracking Changes in Cancellation Value Over Time
-This query tracks the monthly changes in the undelivered value (cancellations).
+Conclusion: There is no improvement seen over time. It's seen in October and November, but in those months, the company has not full stocks.
+
+### Tracking changing in cancellation over each month
 
 ```sql
 SELECT 
@@ -299,47 +320,31 @@ GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY MONTH(Order_Date);
 ```
 
-#### Number of Sales Representatives Over Time
-This query retrieves the number of distinct sales representatives for each month.
+Conclusion: Order cancellation is going up month by month.
+
+### Number of Sales Representatives Over Time
 
 ```sql
 SELECT 
     YEAR(Order_Date) AS Year,
     DATENAME(month, Order_Date) AS Month,
+	ROUND(SUM(Ordered_Value), 2) AS Ordered_Sales,
     COUNT(DISTINCT SalesMan) AS Number_Of_Salesmans
 FROM salesdata
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
 
-#### Days with Highest Sales Value Over Time
-This query retrieves the top 10 days with the highest sales value based on the ordered value.
+Conclusion: The number of hiring increased in November and December, but overall sales decreased in comparison to past months.
+
+### Days with Highest Sales Value Over Time
 
 ```sql
-SELECT Top 10 Order_Date, ROUND(SUM(Ordered_Value),2) AS TotalRevenue
+SELECT TOP 10 Order_Date, ROUND(SUM(Ordered_Value),2) AS TotalRevenue
 FROM SalesData
 GROUP BY Order_Date
 ORDER BY TotalRevenue DESC;
-```
-
-#### Months with Highest Sales
-This query retrieves the top 3 months with the highest sales based on the ordered value.
-
-```sql
-SELECT TOP 3 DATENAME(month, Order_Date) AS Month, ROUND(SUM(Ordered_Value), 2) AS TotalRevenue
-FROM SalesData
-GROUP BY DATENAME(month, Order_Date)
-ORDER BY TotalRevenue DESC;
-```
-
-#### Months with Lowest Sales
-This query retrieves the top 3 months with the lowest sales based on the ordered value.
-
-```sql
-SELECT TOP 3 DATENAME(month, Order_Date) AS Month, ROUND(SUM(Ordered_Value), 2) AS TotalRevenue
-FROM SalesData
-GROUP BY DATENAME(month, Order_Date)
-ORDER BY TotalRevenue ASC;
+Conclusion: The biggest spike in sales is near the holi festival.
 ```
 
 
@@ -366,32 +371,32 @@ GROUP BY Store_Name, Area, ASM
 ORDER BY Total_Undelivered DESC;
 ```
 
-# Area Sales Analysis
 
-#### Total Sales by Area
-This query retrieves the total sales (ordered value) for each area.
+/************  Area Sales Analysis  **************/
+```markdown
+## Total sales (ordered value) by area
 
 ```sql
-SELECT Area, ROUND(SUM(Ordered_Value), 2) AS total_sales
+SELECT Area, ROUND(SUM(Ordered_Value),2) AS total_sales
 FROM salesdata
 GROUP BY Area
 ORDER BY total_sales DESC;
 ```
 
-#### Top-Performing Areas by Total Sales
-This query retrieves the top 10 best-performing areas by total sales (ordered value), along with their sales rank.
+Area such as Mira road, Nalasopara East, Thane West Vasai have the highest sales that are part of western Mumbai. Conclusion: Western coastal area has high potential.
+
+## Top best performing area by Total sales (ordered value)
 
 ```sql
 SELECT TOP 10
     Area,
-    ROUND(SUM(Ordered_Value), 2) AS total_sales,
+    ROUND(SUM(Ordered_Value),2) AS total_sales,
     RANK() OVER (ORDER BY SUM(Ordered_Value) DESC) AS sales_rank
 FROM salesdata
 GROUP BY Area;
 ```
 
-#### Worst-Performing Areas by Total Sales
-This query retrieves the top 10 worst-performing areas by total sales (ordered value).
+## Top 10 worst performing area by Total sales (ordered value)
 
 ```sql
 SELECT TOP 10 Area, SUM(Ordered_Value) AS total_sales
@@ -400,42 +405,42 @@ GROUP BY Area
 ORDER BY total_sales ASC;
 ```
 
-#### Areas with Most Cancellations
-This query retrieves the top 10 areas with the highest total ordered value for undelivered orders (cancellations).
+## Area Where cancellation occurs most
 
 ```sql
-SELECT TOP 10 Area, SalesMan, ASM, ROUND(SUM(Ordered_Value), 2) AS Total_ordered
+SELECT TOP 10 Area, SalesMan, ASM, ROUND(SUM(Ordered_Value),2) AS Total_ordered
 FROM salesdata
 WHERE delivered_value = 0
 GROUP BY AREA, SalesMan, ASM
-ORDER BY ROUND(SUM(Ordered_Value), 2) DESC;
+ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
 
-#### Top Loyal Stores by Delivered Value
-This query retrieves the top 10 stores with the highest total delivered value.
+Highest Fake ordered placed in Nalasopara around (1888456.69 + 1529436.78).
+
+# Store Analysis
+
+## Top Loyals stores by delivered value
 
 ```sql
-SELECT TOP 10 Store_Name, SUM(Delivered_Value) AS total_delivered
+SELECT TOP 10 Store_Name, SUM(Ordered_Value) as Total_Ordered, SUM(Delivered_Value) AS Total_delivered
 FROM salesdata
 GROUP BY Store_Name
-ORDER BY total_delivered DESC
+ORDER BY total_delivered DESC;
 ```
 
-#### Stores with Most Fake Orders
-This query retrieves the top 10 stores with the highest total ordered value for undelivered orders (fake orders).
+## Stores That place most fake orders
 
 ```sql
-SELECT TOP 10 Store_Name, ROUND(SUM(Ordered_Value), 2) AS Total_ordered
+SELECT TOP 10 Store_Name, ROUND(SUM(Ordered_Value),2) AS Total_ordered, Area
 FROM salesdata
 WHERE delivered_value = 0
-GROUP BY Store_Name
-ORDER BY ROUND(SUM(Ordered_Value), 2) DESC;
+GROUP BY Store_Name, Area
+ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
 
 # Sales Representative Analysis
 
-#### Sales Performance by Salesman
-This query retrieves the sales performance of each salesman, including the number of customers, total ordered value, and total delivered value.
+## Sales Performance by Salesman
 
 ```sql
 SELECT
@@ -452,69 +457,117 @@ GROUP BY s.SalesMan
 ORDER BY TotalOrderedValue DESC;
 ```
 
-Here's the continuation of the markdown formatting with descriptions for the remaining SQL queries:
+Conclusion: Rajendra Patel has the highest sales with just 172 customers and Mohammed has 404 customers.
 
-```markdown
-## Top-Performing Sales Representatives by Ordered Value
-This query retrieves the top 10 sales representatives with the highest total sales based on the delivered value.
+## Area Penetration Performance by Salesman
 
 ```sql
-SELECT TOP 10 SalesMan, ROUND(SUM(Delivered_Value), 2) AS total_sales
+SELECT 
+    s.SalesMan,
+    COUNT(DISTINCT o.Customer_No) AS NumberOfCustomers,
+    SUM(o.Ordered_Value) AS TotalOrderedValue,
+    SUM(o.Delivered_Value) AS TotalDeliveredValue
+FROM salesdata o
+JOIN (
+    SELECT DISTINCT SalesMan
+    FROM salesdata
+) s ON o.SalesMan = s.SalesMan
+GROUP BY s.SalesMan
+ORDER BY NumberOfCustomers DESC;
+```
+
+Neeraj Sahu has 416 followed by Mohammad Saeed Shaikh 404.
+
+## Average Salesman Penetration In Market
+
+```sql
+WITH CTE AS(
+	SELECT 
+    s.SalesMan,
+    COUNT(DISTINCT o.Customer_No) AS NumberOfCustomers,
+    SUM(o.Ordered_Value) AS TotalOrderedValue,
+    SUM(o.Delivered_Value) AS TotalDeliveredValue
+FROM salesdata o
+JOIN (
+    SELECT DISTINCT SalesMan
+    FROM salesdata)
+	s ON o.SalesMan = s.SalesMan
+GROUP BY s.SalesMan)
+
+SELECT AVG(NumberOfCustomers) AS Average_Shops
+FROM CTE
+ORDER BY AVG(NumberOfCustomers) DESC;
+```
+
+Salesman AVG Shops Penetration In Market is 145.
+
+## Top performing sales representative performance by Ordered Value
+
+```sql
+SELECT TOP 10 SalesMan, ROUND(SUM(Delivered_Value),2) AS total_sales
 FROM salesdata
 GROUP BY SalesMan
 ORDER BY total_sales DESC;
 ```
 
-#### Sales Representatives with Highest Cancellations
-This query retrieves the top 10 sales representatives with the highest total undelivered value (cancellations).
+## Sales representative who has the highest deliver return in value term
 
 ```sql
-SELECT TOP 10 SalesMan, ROUND(SUM(Undelivered_Value), 2) AS Undeliver_value
+SELECT TOP 10 SalesMan, ROUND(SUM(Undelivered_Value),2) AS Undeliver_value
 FROM salesdata
 GROUP BY SalesMan
 ORDER BY Undeliver_value DESC;
 ```
 
-#### Loss-Making Sales Representatives
-This query retrieves the top 10 sales representatives with the highest total undelivered value (cancellations) and whose delivered value is below the average.
+## Salesman who placed Fake Orders most
 
 ```sql
-SELECT TOP 10 SalesMan, ROUND(SUM(Undelivered_Value), 2) AS Undeliver_value
-FROM salesdata
-GROUP BY SalesMan
-HAVING delivered_Value < (SELECT ROUND(AVG(delivered_Value), 2) FROM Salesdata)
-ORDER BY Undeliver_value DESC;
-```
-
-#### Sales Representatives with Most Fake Orders
-This query retrieves the top 10 sales representatives with the highest total ordered value for undelivered orders (fake orders).
-
-```sql
-SELECT TOP 10 SalesMan, ASM, ROUND(SUM(Ordered_Value), 2) AS Total_ordered
+SELECT TOP 10 SalesMan, ASM, ROUND(SUM(Ordered_Value),2) AS Total_ordered
 FROM salesdata
 WHERE delivered_value = 0
 GROUP BY SalesMan, ASM
-ORDER BY ROUND(SUM(Ordered_Value), 2) DESC;
+ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
 
-#### Best-Performing Area Sales Managers (ASMs)
-This query retrieves the best-performing area sales managers (ASMs) based on the total ordered value and delivered value, along with the number of salesmen under each ASM.
+
+Here's the README markdown file in the requested style:
+
+```markdown
+# ASM (Area Sales Manager) Analysis
+
+#### Analysis of Sales Performance by ASM
 
 ```sql
 SELECT
     ASM,
-    COUNT(DISTINCT SalesMan) AS NumberOfSalesmen,
-    SUM(Ordered_Value) AS TotalOrderedValue,
-    SUM(Delivered_Value) AS TotalDeliveredValue
+    ROUND(COUNT(DISTINCT SalesMan),2) AS NumberOfSalesmen,
+    ROUND(SUM(Ordered_Value),2) AS TotalOrderedValue,
+    ROUND(SUM(Delivered_Value),2) AS TotalDeliveredValue,
+    ROUND(SUM(Ordered_Value)/COUNT(DISTINCT SalesMan),2) AS Per_Salesman
 FROM salesdata
 GROUP BY ASM
-ORDER BY TotalOrderedValue DESC;
+ORDER BY Per_Salesman DESC;
 ```
+**Conclusion:** Bikas is the best leader overall with an average sale per salesperson of 19,370,302.76 rupees over time.
 
-# Sales Distribution and Outliers
+#### Best Performing ASM by Overall Delivered Value
+
+```sql
+SELECT
+    ASM,
+    ROUND(COUNT(DISTINCT SalesMan),2) AS NumberOfSalesmen,
+    ROUND(SUM(Ordered_Value),2) AS TotalOrderedValue,
+    ROUND(SUM(Delivered_Value),2) AS TotalDeliveredValue,
+    Rank() OVER (Order by SUM(Delivered_Value) DESC) as Rn
+FROM salesdata
+GROUP BY ASM
+ORDER BY TotalDeliveredValue DESC;
+```
+**Conclusion:** Darshan has the overall highest sales followed by Vikash Singh. Leaders needing improvement are Sanjeev Vedak, Amresh Singh, and Prithwi.
+
+# Statistical Analysis
 
 #### Sales Distribution of Order Values
-This query calculates the first quartile (Q1), median, and third quartile (Q3) of the ordered values.
 
 ```sql
 SELECT 
@@ -523,18 +576,18 @@ SELECT
     PERCENTILE_DISC(0.75) WITHIN GROUP (ORDER BY Ordered_Value) OVER() AS Q3
 FROM salesdata;
 ```
+**Conclusion:** Quartile 1, median, and Quartile 3 of order values are 3210.26, 3959.7, and 5786.01 respectively.
 
 #### Outliers in Delivered Values
-This query identifies the order numbers and delivered values that are outliers (more than 20 standard deviations above the mean).
 
 ```sql
 DECLARE @AvgDeliveredValue FLOAT, @StdevDeliveredValue FLOAT;
-
 SELECT @AvgDeliveredValue = AVG(Delivered_Value),
        @StdevDeliveredValue = STDEV(Delivered_Value)
 FROM salesdata;
-
 SELECT Order_Number, Delivered_Value
 FROM salesdata
-WHERE Delivered_Value > @AvgDeliveredValue + 20 * @StdevDeliveredValue;
+WHERE Delivered_Value > @AvgDeliveredValue + 3 * @StdevDeliveredValue;
+```
+**Conclusion:** There are no outliers seen in the table.
 ```
