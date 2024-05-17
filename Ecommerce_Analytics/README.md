@@ -284,6 +284,7 @@ GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
 ![3](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/ae4bc45a-5d52-4fb6-bc3e-8358076a24c3)
+
 Conclusion: In The month of March, highest sales followed by May, September has the least followed by December.
 
 #### Tracking changes in Cancellation 
@@ -299,6 +300,7 @@ GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
 ![4](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/b7a98f5d-d1a9-4114-b703-afea624862c8)
+
 Conclusion: There is no improvement seen over time. It's seen in October and November, but in those months, the company has not full stocks.
 
 #### Tracking changing in cancellation over each month
@@ -314,6 +316,7 @@ GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY MONTH(Order_Date);
 ```
 ![5](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/7a24a3b6-bc2d-42af-8aac-14b42d2e3c09)
+
 Conclusion: Order cancellation is going up month by month.
 
 #### Number of Sales Representatives Over Time
@@ -328,6 +331,7 @@ GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
 ![6](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/b58bbd34-8739-4e88-8b9a-954da8043afc)
+
 Conclusion: The number of hiring increased in November and December, but overall sales decreased in comparison to past months.
 
 #### Days with Highest Sales Value Over Time
@@ -336,9 +340,10 @@ SELECT TOP 10 Order_Date, ROUND(SUM(Ordered_Value),2) AS TotalRevenue
 FROM SalesData
 GROUP BY Order_Date
 ORDER BY TotalRevenue DESC;
-Conclusion: The biggest spike in sales is near the holi festival.
 ```
 ![7](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/1f2cc37a-0b02-461b-8fb8-1e3c3c51618a)
+
+Conclusion: The biggest spike in sales seems near the holi festival.
 
 ## Store Analysis
 #### Top-Performing Stores
@@ -368,6 +373,7 @@ GROUP BY Area
 ORDER BY total_sales DESC;
 ```
 ![10](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/de32eb68-6bc5-4371-9c0b-9aacc9f72776)
+
 Area such as Mira road, Nalasopara East, Thane West Vasai have the highest sales that are part of western Mumbai. Conclusion: Western coastal area has high potential.
 
 #### Top best performing area by Total sales (ordered value)
@@ -399,6 +405,7 @@ GROUP BY AREA, SalesMan, ASM
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
 ![13](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/0fedb499-c8f9-4a2f-b9d2-dda2ee89d908)
+
 Highest Fake ordered placed in Nalasopara around (1888456.69 + 1529436.78).
 
 ## Store Analysis
@@ -438,6 +445,7 @@ GROUP BY s.SalesMan
 ORDER BY TotalOrderedValue DESC;
 ```
 ![16](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/c89e3494-f828-4edb-9880-1ee55b2b5dd8)
+
 Conclusion: Rajendra Patel has the highest sales with just 172 customers and Mohammed has 404 customers.
 
 #### Area Penetration Performance by Salesman
@@ -456,6 +464,7 @@ GROUP BY s.SalesMan
 ORDER BY NumberOfCustomers DESC;
 ```
 ![17](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/7e0c50c2-6b7a-422e-a066-eeabcb577ccb)
+
 Neeraj Sahu has 416 followed by Mohammad Saeed Shaikh 404.
 
 #### Average Salesman Penetration In Market
@@ -478,7 +487,9 @@ FROM CTE
 ORDER BY AVG(NumberOfCustomers) DESC;
 ```
 ![18](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/2726bc7e-65e9-40bd-8428-4b74d587c1aa)
+
 Salesman AVG Shops Penetration In Market is 145.
+
 #### Top performing sales representative performance by Ordered Value
 ```sql
 SELECT TOP 10 SalesMan, ROUND(SUM(Delivered_Value),2) AS total_sales
@@ -487,6 +498,7 @@ GROUP BY SalesMan
 ORDER BY total_sales DESC;
 ```
 ![19](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/612e61ed-9d8c-44ed-bffe-e12d7d442603)
+
 #### Sales representative who has the highest deliver return in value term
 ```sql
 SELECT TOP 10 SalesMan, ROUND(SUM(Undelivered_Value),2) AS Undeliver_value
@@ -510,7 +522,6 @@ ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 
 
 ## ASM (Area Sales Manager) Analysis
-
 #### Analysis of Sales Performance by ASM
 
 ```sql
@@ -541,12 +552,11 @@ GROUP BY ASM
 ORDER BY TotalDeliveredValue DESC;
 ```
 ![23](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/bbcee848-ccf6-4c71-9107-6f17400021ad)
+
 **Conclusion:** Darshan has the overall highest sales followed by Vikash Singh. Leaders needing improvement are Sanjeev Vedak, Amresh Singh, and Prithwi.
 
 ## Statistical Analysis
-
 #### Sales Distribution of Order Values
-
 ```sql
 SELECT 
     PERCENTILE_DISC(0.25) WITHIN GROUP (ORDER BY Ordered_Value) OVER() AS Q1,
@@ -557,7 +567,6 @@ FROM salesdata;
 **Conclusion:** Quartile 1, median, and Quartile 3 of order values are 3210.26, 3959.7, and 5786.01 respectively.
 
 #### Outliers in Delivered Values
-
 ```sql
 DECLARE @AvgDeliveredValue FLOAT, @StdevDeliveredValue FLOAT;
 SELECT @AvgDeliveredValue = AVG(Delivered_Value),
