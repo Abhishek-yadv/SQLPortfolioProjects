@@ -2,7 +2,7 @@
 /********************************************/
 /*********** Data Preperation **************/
 
--- Data Exploration and Understanding
+Data Exploration and Understanding
 
 -- Cheking table structure and data types:
 EXEC sp_columns salesdata;
