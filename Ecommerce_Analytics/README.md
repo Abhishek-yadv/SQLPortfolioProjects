@@ -246,7 +246,9 @@ WHERE TABLE_NAME = 'salesdata';
 
 /********************************************/
 /********* Part 2 Sales Analysis *********/
+
 /****** A Quick Sales Overview and Summary ********/
+
 
 ```sql
 SELECT 
