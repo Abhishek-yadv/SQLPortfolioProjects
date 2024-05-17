@@ -353,7 +353,6 @@ FROM SalesData
 GROUP BY Store_Name, Area, ASM
 ORDER BY TotalSales DESC;
 ```
-![8](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/6bc24924-f39e-4fe2-96db-48ae4f906b2b)
 
 #### Stores with Most Returned/Cancelled Orders
 ```sql
@@ -362,7 +361,6 @@ FROM salesdata
 GROUP BY Store_Name, Area, ASM
 ORDER BY Total_Undelivered DESC;
 ```
-![9](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/3a8523c3-7b92-4af6-a4f3-c1aa1543422b)
 
 ##  Area Sales Analysis 
 #### Total sales (ordered value) by area
@@ -372,7 +370,7 @@ FROM salesdata
 GROUP BY Area
 ORDER BY total_sales DESC;
 ```
-![10](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/de32eb68-6bc5-4371-9c0b-9aacc9f72776)
+![8](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/6bc24924-f39e-4fe2-96db-48ae4f906b2b)
 
 Area such as Mira road, Nalasopara East, Thane West Vasai have the highest sales that are part of western Mumbai. Conclusion: Western coastal area has high potential.
 
@@ -385,7 +383,7 @@ SELECT TOP 10
 FROM salesdata
 GROUP BY Area;
 ```
-![11](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/c18dfb2c-0754-4312-84ee-6bc328e9799f)
+![9](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/3a8523c3-7b92-4af6-a4f3-c1aa1543422b)
 
 #### Top 10 worst performing area by Total sales (ordered value)
 ```sql
@@ -394,7 +392,7 @@ FROM salesdata
 GROUP BY Area
 ORDER BY total_sales ASC;
 ```
-![12](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/fab68572-d31f-49b9-b8a7-81c1e6787077)
+![10](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/de32eb68-6bc5-4371-9c0b-9aacc9f72776)
 
 #### Area Where cancellation occurs most
 ```sql
@@ -404,7 +402,7 @@ WHERE delivered_value = 0
 GROUP BY AREA, SalesMan, ASM
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
-![13](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/0fedb499-c8f9-4a2f-b9d2-dda2ee89d908)
+![11](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/c18dfb2c-0754-4312-84ee-6bc328e9799f)
 
 Highest Fake ordered placed in Nalasopara around (1888456.69 + 1529436.78).
 
@@ -416,6 +414,7 @@ FROM salesdata
 GROUP BY Store_Name
 ORDER BY total_delivered DESC;
 ```
+![12](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/fab68572-d31f-49b9-b8a7-81c1e6787077)
 
 #### Stores That place most fake orders
 ```sql
@@ -425,6 +424,7 @@ WHERE delivered_value = 0
 GROUP BY Store_Name, Area
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
+![13](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/0fedb499-c8f9-4a2f-b9d2-dda2ee89d908)
 
 ## Sales Representative Analysis
 #### Sales Performance by Salesman
