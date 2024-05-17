@@ -1,3 +1,4 @@
+# Superzop End To End Sales Analysis
 
 # Data Cleaning Process Overview
 
@@ -246,7 +247,7 @@ FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
 ```
 
----------------------------- Now Data Has Been Cleaned And ready for analysys ----------------------------
+---------------------------- Now Data Has Been Cleaned And ready for analysis ----------------------------
 
 # Time Series Analysis
 
