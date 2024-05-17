@@ -256,8 +256,7 @@ SELECT
      ROUND(SUM(Undelivered_value), 2) AS Total_Undelivered_values
 FROM salesdata;
 ```
-
-This query provides a summary of total ordered, delivered, and undelivered values. Additionally:
+![1](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/8e0816ca-61d2-4945-adf6-398cffcebb91)
 
 ```sql
 -- Total FakeOrder value
@@ -266,13 +265,12 @@ ROUND(SUM(Ordered_Value), 2) AS Total_Cancellation
 FROM sales data
 WHERE Delivered_Value = 0;
 ```
+![2](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/83659277-6663-4f79-b786-67d9878a27c7)
 
 Conclusion: Overall revenue is 787612350.92. Delivered value is 648748741.47 and Undelivered value is 124733011.7, in which 58674265.11 is Faked Ordered value.
 
 ## Time Series Analysis
-
 #### Sales Performance Over Time
-
 ```sql
 SELECT 
     YEAR(Order_Date) AS Year,
@@ -285,11 +283,10 @@ FROM salesdata
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
-
+![3](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/ae4bc45a-5d52-4fb6-bc3e-8358076a24c3)
 Conclusion: In The month of March, highest sales followed by May, September has the least followed by December.
 
 #### Tracking changes in Cancellation 
-
 ```sql
 SELECT 
     YEAR(Order_Date) AS Year,
@@ -301,11 +298,10 @@ WHERE Delivered_Value = 0
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
-
+![4](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/b7a98f5d-d1a9-4114-b703-afea624862c8)
 Conclusion: There is no improvement seen over time. It's seen in October and November, but in those months, the company has not full stocks.
 
 #### Tracking changing in cancellation over each month
-
 ```sql
 SELECT 
     YEAR(Order_Date) AS Year,
@@ -317,11 +313,10 @@ WHERE Delivered_Value = 0
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY MONTH(Order_Date);
 ```
-
+![5](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/7a24a3b6-bc2d-42af-8aac-14b42d2e3c09)
 Conclusion: Order cancellation is going up month by month.
 
 #### Number of Sales Representatives Over Time
-
 ```sql
 SELECT 
     YEAR(Order_Date) AS Year,
@@ -332,11 +327,10 @@ FROM salesdata
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 ```
-
+![6](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/b58bbd34-8739-4e88-8b9a-954da8043afc)
 Conclusion: The number of hiring increased in November and December, but overall sales decreased in comparison to past months.
 
 #### Days with Highest Sales Value Over Time
-
 ```sql
 SELECT TOP 10 Order_Date, ROUND(SUM(Ordered_Value),2) AS TotalRevenue
 FROM SalesData
@@ -344,46 +338,39 @@ GROUP BY Order_Date
 ORDER BY TotalRevenue DESC;
 Conclusion: The biggest spike in sales is near the holi festival.
 ```
-
-
+![7](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/1f2cc37a-0b02-461b-8fb8-1e3c3c51618a)
 
 ## Store Analysis
-
-### Top-Performing Stores
-This query retrieves the top 10 stores with the highest total sales based on the delivered value.
-
+#### Top-Performing Stores
 ```sql
 SELECT TOP 10 Store_Name, SUM(delivered_Value) AS TotalSales, Area, ASM
 FROM SalesData
 GROUP BY Store_Name, Area, ASM
 ORDER BY TotalSales DESC;
 ```
+![8](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/6bc24924-f39e-4fe2-96db-48ae4f906b2b)
 
 #### Stores with Most Returned/Cancelled Orders
-This query retrieves the top 10 stores with the highest total undelivered value (cancelled orders).
-
 ```sql
 SELECT TOP 10 Store_Name, SUM(Undelivered_Value) AS Total_Undelivered, Area, ASM
 FROM salesdata
 GROUP BY Store_Name, Area, ASM
 ORDER BY Total_Undelivered DESC;
 ```
-
+![9](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/3a8523c3-7b92-4af6-a4f3-c1aa1543422b)
 
 ##  Area Sales Analysis 
 #### Total sales (ordered value) by area
-
 ```sql
 SELECT Area, ROUND(SUM(Ordered_Value),2) AS total_sales
 FROM salesdata
 GROUP BY Area
 ORDER BY total_sales DESC;
 ```
-
+![10](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/de32eb68-6bc5-4371-9c0b-9aacc9f72776)
 Area such as Mira road, Nalasopara East, Thane West Vasai have the highest sales that are part of western Mumbai. Conclusion: Western coastal area has high potential.
 
 #### Top best performing area by Total sales (ordered value)
-
 ```sql
 SELECT TOP 10
     Area,
@@ -392,18 +379,18 @@ SELECT TOP 10
 FROM salesdata
 GROUP BY Area;
 ```
+![11](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/c18dfb2c-0754-4312-84ee-6bc328e9799f)
 
 #### Top 10 worst performing area by Total sales (ordered value)
-
 ```sql
 SELECT TOP 10 Area, SUM(Ordered_Value) AS total_sales
 FROM salesdata
 GROUP BY Area
 ORDER BY total_sales ASC;
 ```
+![12](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/fab68572-d31f-49b9-b8a7-81c1e6787077)
 
 #### Area Where cancellation occurs most
-
 ```sql
 SELECT TOP 10 Area, SalesMan, ASM, ROUND(SUM(Ordered_Value),2) AS Total_ordered
 FROM salesdata
@@ -411,22 +398,20 @@ WHERE delivered_value = 0
 GROUP BY AREA, SalesMan, ASM
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
-
+![13](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/0fedb499-c8f9-4a2f-b9d2-dda2ee89d908)
 Highest Fake ordered placed in Nalasopara around (1888456.69 + 1529436.78).
 
 ## Store Analysis
-
 #### Top Loyals stores by delivered value
-
 ```sql
 SELECT TOP 10 Store_Name, SUM(Ordered_Value) as Total_Ordered, SUM(Delivered_Value) AS Total_delivered
 FROM salesdata
 GROUP BY Store_Name
 ORDER BY total_delivered DESC;
 ```
+![14](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/37915c62-13e2-4622-acda-78d837711caf)
 
 #### Stores That place most fake orders
-
 ```sql
 SELECT TOP 10 Store_Name, ROUND(SUM(Ordered_Value),2) AS Total_ordered, Area
 FROM salesdata
@@ -434,11 +419,10 @@ WHERE delivered_value = 0
 GROUP BY Store_Name, Area
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
+![15](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/047e8813-9c31-4f97-bd33-142e39288c7f)
 
 ## Sales Representative Analysis
-
 #### Sales Performance by Salesman
-
 ```sql
 SELECT
     s.SalesMan,
@@ -453,11 +437,10 @@ JOIN (
 GROUP BY s.SalesMan
 ORDER BY TotalOrderedValue DESC;
 ```
-
+![16](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/c89e3494-f828-4edb-9880-1ee55b2b5dd8)
 Conclusion: Rajendra Patel has the highest sales with just 172 customers and Mohammed has 404 customers.
 
 #### Area Penetration Performance by Salesman
-
 ```sql
 SELECT 
     s.SalesMan,
@@ -472,11 +455,10 @@ JOIN (
 GROUP BY s.SalesMan
 ORDER BY NumberOfCustomers DESC;
 ```
-
+![17](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/7e0c50c2-6b7a-422e-a066-eeabcb577ccb)
 Neeraj Sahu has 416 followed by Mohammad Saeed Shaikh 404.
 
 #### Average Salesman Penetration In Market
-
 ```sql
 WITH CTE AS(
     SELECT 
@@ -495,29 +477,27 @@ SELECT AVG(NumberOfCustomers) AS Average_Shops
 FROM CTE
 ORDER BY AVG(NumberOfCustomers) DESC;
 ```
-
+![18](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/2726bc7e-65e9-40bd-8428-4b74d587c1aa)
 Salesman AVG Shops Penetration In Market is 145.
-
 #### Top performing sales representative performance by Ordered Value
-
 ```sql
 SELECT TOP 10 SalesMan, ROUND(SUM(Delivered_Value),2) AS total_sales
 FROM salesdata
 GROUP BY SalesMan
 ORDER BY total_sales DESC;
 ```
-
+![19](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/612e61ed-9d8c-44ed-bffe-e12d7d442603)
 #### Sales representative who has the highest deliver return in value term
-
 ```sql
 SELECT TOP 10 SalesMan, ROUND(SUM(Undelivered_Value),2) AS Undeliver_value
 FROM salesdata
 GROUP BY SalesMan
 ORDER BY Undeliver_value DESC;
 ```
+![20](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/27493352-d486-40da-b162-1ca28bdc76ac)
+
 
 #### Salesman who placed Fake Orders most
-
 ```sql
 SELECT TOP 10 SalesMan, ASM, ROUND(SUM(Ordered_Value),2) AS Total_ordered
 FROM salesdata
@@ -525,6 +505,7 @@ WHERE delivered_value = 0
 GROUP BY SalesMan, ASM
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
+![21](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/89e780aa-6b59-4976-8b60-2bb9c1971c14)
 
 
 
@@ -543,10 +524,11 @@ FROM salesdata
 GROUP BY ASM
 ORDER BY Per_Salesman DESC;
 ```
+![22](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/17c71c71-7c89-42ce-b439-1d52a1ae2ae1)
+
 **Conclusion:** Bikas is the best leader overall with an average sale per salesperson of 19,370,302.76 rupees over time.
 
 #### Best Performing ASM by Overall Delivered Value
-
 ```sql
 SELECT
     ASM,
@@ -558,6 +540,7 @@ FROM salesdata
 GROUP BY ASM
 ORDER BY TotalDeliveredValue DESC;
 ```
+![23](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/bbcee848-ccf6-4c71-9107-6f17400021ad)
 **Conclusion:** Darshan has the overall highest sales followed by Vikash Singh. Leaders needing improvement are Sanjeev Vedak, Amresh Singh, and Prithwi.
 
 ## Statistical Analysis
