@@ -1,7 +1,7 @@
 # Superzop End To End Sales Analysis
 
-## Data Cleaning Process Overview
-
+## Part 1 Data Cleaning Process
+### Overview
 The data cleaning process for the `salesdata` table involves several steps to ensure the data is accurate, consistent, and ready for analysis. Below is full description about the steps I have taken throughout in this process:
 
 Overview Of Datasets:
