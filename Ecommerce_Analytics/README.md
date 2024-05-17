@@ -353,6 +353,7 @@ FROM SalesData
 GROUP BY Store_Name, Area, ASM
 ORDER BY TotalSales DESC;
 ```
+![b1](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/be165a74-0be6-4f00-8024-661253b2aeac)
 
 #### Stores with Most Returned/Cancelled Orders
 ```sql
@@ -361,6 +362,7 @@ FROM salesdata
 GROUP BY Store_Name, Area, ASM
 ORDER BY Total_Undelivered DESC;
 ```
+![b2](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/b9518a7c-0b6d-4d0b-9ce3-c9551fbed639)
 
 ##  Area Sales Analysis 
 #### Total sales (ordered value) by area
