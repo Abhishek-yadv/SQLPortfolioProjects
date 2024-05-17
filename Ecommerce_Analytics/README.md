@@ -243,13 +243,9 @@ WHERE TABLE_NAME = 'salesdata';
 ```
 
 ---------------------------- Now Data Has Been Cleaned And ready for analysis ----------------------------
-
-Sure! Here's the README markdown file based on the provided SQL queries:
-
-```markdown
-# Sales Analysis Overview
-
-## Quick Overview and Summary
+/********************************************/
+/********* Part 2 Sales Analysis *********/
+/****** A Quick Sales Overview and Summary ********/
 
 ```sql
 SELECT 
