@@ -580,3 +580,4 @@ WHERE Delivered_Value > @AvgDeliveredValue + 3 * @StdevDeliveredValue;
 
 **Conclusion:** There are no outliers seen in the table.
 ```
+THANKS FOR WATCHING, Haven't Imagine You Will Arrived Here.  
