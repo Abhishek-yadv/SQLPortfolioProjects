@@ -251,7 +251,7 @@ WHERE TABLE_NAME = 'salesdata';
 
 ```sql
 SELECT 
-    ROUND(SUM(Ordered_Value), 2) AS Total_Ordered,
+    	ROUND(SUM(Ordered_Value), 2) AS Total_Ordered,
 	ROUND(SUM(Delivered_Value), 2) AS Total_Delivered_Value,
 	ROUND(SUM(Undelivered_value), 2) AS Total_Undelivered_values
 FROM salesdata;
@@ -262,7 +262,7 @@ This query provides a summary of total ordered, delivered, and undelivered value
 ```sql
 -- Total FakeOrder value
 SELECT 
-    ROUND(SUM(Ordered_Value), 2) AS Total_Cancellation
+ROUND(SUM(Ordered_Value), 2) AS Total_Cancellation
 FROM salesdata
 WHERE Delivered_Value = 0;
 ```
@@ -295,7 +295,7 @@ SELECT
     YEAR(Order_Date) AS Year,
     DATENAME(month, Order_Date) AS Month,
     ROUND(SUM(Ordered_Value), 2) AS Cancelled_order,
-	RANK() OVER(ORDER BY SUM(Ordered_Value)) AS RN
+    RANK() OVER(ORDER BY SUM(Ordered_Value)) AS RN
 FROM salesdata
 WHERE Delivered_Value = 0
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
@@ -311,7 +311,7 @@ SELECT
     YEAR(Order_Date) AS Year,
     DATENAME(month, Order_Date) AS Month,
     ROUND(ABS(SUM(Undelivered_value) - 
-	LAG(SUM(Undelivered_value), 1, 0) OVER (ORDER BY YEAR(Order_Date), MONTH(Order_Date))),2) AS last_monthly_sales
+    LAG(SUM(Undelivered_value), 1, 0) OVER (ORDER BY YEAR(Order_Date), MONTH(Order_Date))),2) AS last_monthly_sales
 FROM salesdata
 WHERE Delivered_Value = 0
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
@@ -326,7 +326,7 @@ Conclusion: Order cancellation is going up month by month.
 SELECT 
     YEAR(Order_Date) AS Year,
     DATENAME(month, Order_Date) AS Month,
-	ROUND(SUM(Ordered_Value), 2) AS Ordered_Sales,
+    ROUND(SUM(Ordered_Value), 2) AS Ordered_Sales,
     COUNT(DISTINCT SalesMan) AS Number_Of_Salesmans
 FROM salesdata
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
@@ -480,7 +480,7 @@ Neeraj Sahu has 416 followed by Mohammad Saeed Shaikh 404.
 
 ```sql
 WITH CTE AS(
-	SELECT 
+    SELECT 
     s.SalesMan,
     COUNT(DISTINCT o.Customer_No) AS NumberOfCustomers,
     SUM(o.Ordered_Value) AS TotalOrderedValue,
