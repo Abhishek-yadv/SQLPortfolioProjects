@@ -150,8 +150,6 @@ ORDER BY duplicate_count DESC;
 - The dataset contains 12,740 rows and 15 columns, spanning the date range from 01-02-2023 to 31-10-2023.
 
 ## Handling Inconsistent Data
-```markdown
-
 ```sql
 -- Rename TIMESTAMP column
 EXEC sp_rename 'salesdata.TIMESTAMP', 'Time_stamp', 'COLUMN';
