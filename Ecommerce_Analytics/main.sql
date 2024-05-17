@@ -1,9 +1,9 @@
-﻿/* End-to-End Analysis of Sales Data with MySQL */
+/******** SuperZop End to End Sales Analysis **********/
+
 /********************************************/
-/*********** Data Preperation **************/
+/********* Part 1 Data Preperation *********/
 
-Data Exploration and Understanding
-
+/***** Data Exploration and Understanding ********/
 -- Cheking table structure and data types:
 EXEC sp_columns salesdata;
 
@@ -20,28 +20,6 @@ WHERE TABLE_NAME = 'salesdata';
 SELECT TOP 10 *
 FROM salesdata
 order by Rand();
-
-
--- Handling Missing/Null Values:
--- Missing Values:
-SELECT 
-    SUM(CASE WHEN Store_ID IS NULL THEN 1 ELSE 0 END) AS store_ids,
-    SUM(CASE WHEN Store_Name IS NULL THEN 1 ELSE 0 END) AS names,
-    SUM(CASE WHEN Area IS NULL THEN 1 ELSE 0 END) AS areas,
-    SUM(CASE WHEN ASM IS NULL THEN 1 ELSE 0 END) AS asm,
-    SUM(CASE WHEN DASM IS NULL THEN 1 ELSE 0 END) AS dasm,
-    SUM(CASE WHEN SalesMan IS NULL THEN 1 ELSE 0 END) AS salesmen,
-    SUM(CASE WHEN Customer_No IS NULL THEN 1 ELSE 0 END) AS ustomer_nos,
-    SUM(CASE WHEN Order_Number IS NULL THEN 1 ELSE 0 END) AS order_numbers,
-    SUM(CASE WHEN Order_Date IS NULL THEN 1 ELSE 0 END) AS order_dates,
-    SUM(CASE WHEN TimeStamp IS NULL THEN 1 ELSE 0 END) AS timestamps,
-    SUM(CASE WHEN Ordered_Value IS NULL THEN 1 ELSE 0 END) AS ordered_values,
-    SUM(CASE WHEN Delivered_Value IS NULL THEN 1 ELSE 0 END) AS delivered_values,
-    SUM(CASE WHEN Sugar IS NULL THEN 1 ELSE 0 END) AS sugar,
-    SUM(CASE WHEN FMCG IS NULL THEN 1 ELSE 0 END) AS fmcg,
-    SUM(CASE WHEN Delivered_Amt_without_Sugar_FMCG IS NULL THEN 1 ELSE 0 END) AS null_delivered_amt_without_sugar_fmcg
-FROM salesdata;
--- There is null value in dasm, delivered_values, sugar, fmcg
 
 -- Identify unique values in categorical columns
 SELECT DISTINCT Area FROM salesdata;
@@ -60,6 +38,36 @@ WHERE table_name = 'salesdata';
 SELECT MAX(order_date), MIN(order_date) 
 FROM salesdata;
 
+/*********** Handling Missing Values **************/
+-- Missing Values:
+SELECT 
+    SUM(CASE WHEN Store_ID IS NULL THEN 1 ELSE 0 END) AS store_ids,
+    SUM(CASE WHEN Store_Name IS NULL THEN 1 ELSE 0 END) AS names,
+    SUM(CASE WHEN Area IS NULL THEN 1 ELSE 0 END) AS areas,
+    SUM(CASE WHEN ASM IS NULL THEN 1 ELSE 0 END) AS asm,
+    SUM(CASE WHEN DASM IS NULL THEN 1 ELSE 0 END) AS dasm,
+    SUM(CASE WHEN SalesMan IS NULL THEN 1 ELSE 0 END) AS salesmen,
+    SUM(CASE WHEN Customer_No IS NULL THEN 1 ELSE 0 END) AS ustomer_nos,
+    SUM(CASE WHEN Order_Number IS NULL THEN 1 ELSE 0 END) AS order_numbers,
+    SUM(CASE WHEN Order_Date IS NULL THEN 1 ELSE 0 END) AS order_dates,
+    SUM(CASE WHEN TimeStamp IS NULL THEN 1 ELSE 0 END) AS timestamps,
+    SUM(CASE WHEN Ordered_Value IS NULL THEN 1 ELSE 0 END) AS ordered_values,
+    SUM(CASE WHEN Delivered_Value IS NULL THEN 1 ELSE 0 END) AS delivered_values,
+    SUM(CASE WHEN Sugar IS NULL THEN 1 ELSE 0 END) AS sugar,
+    SUM(CASE WHEN FMCG IS NULL THEN 1 ELSE 0 END) AS fmcg,
+    SUM(CASE WHEN Delivered_Amt_without_Sugar_FMCG IS NULL THEN 1 ELSE 0 END) AS null_delivered_amt_without_sugar_fmcg
+FROM salesdata;
+
+-- There is null value in dasm, delivered_values, sugar, fmcg
+
+/*********** Handling Duplicates Values **************/
+SELECT Store_ID,
+    Order_Number,
+    COUNT(*) AS duplicate_count
+FROM salesdata
+GROUP BY Store_ID, Order_Number
+HAVING COUNT(*) > 1
+ORDER BY duplicate_count DESC;
 
 -- 🔎 Observations and Conclusions:
 -- The column DASM have almost 40 percent value is null there is many in company when DISTRIC Area Sales Manager not availbale then it's handle by reginal sales manager
@@ -79,9 +87,8 @@ FROM salesdata;
 -- so it could be avoided we are going to do overall sales analysis that's what company core business staples
 -- There are 12740 rows and 15 columns between the date of 01-02-2023 and 31-10-2023
 
-/** Data Preprocessing **/
 
-/* Handling Inconsistent Data:*/
+/************* Handling Inconsistent Data ****************/
 -- Rename TIMESTAMP columns
 EXEC sp_rename 'salesdata.TIMESTAMP', 'Time_stamp', 'COLUMN';
 
@@ -90,8 +97,7 @@ UPDATE salesdata
 SET Order_Number = SUBSTRING(Order_Number, CHARINDEX('/', Order_Number) + 1, LEN(Order_Number));
 
 
-/* Standardizing Data Formats:*/
-
+/************* Standardizing Data Formats ****************/
 -- Convert Order Date Datatype.
 UPDATE salesdata
 SET Order_Date = CONVERT(DATE, Order_Date, 105);
@@ -101,7 +107,7 @@ ALTER TABLE salesdata
 ALTER COLUMN Order_Date DATE;
 
 
--- Convert column TimeStamp Datatype to TimeStamp.
+-- Convert column TimeStamp Datatype.
 UPDATE salesdata
 SET Time_Stamp= CONVERT(DATETIME2, Time_Stamp, 105);
 
@@ -145,7 +151,8 @@ SET Customer_No = CASE WHEN ISNUMERIC(Customer_No) = 0 THEN '0' ELSE Customer_No
 ALTER TABLE salesdata
 ALTER COLUMN Customer_No BIGINT;
 
-/* Creating Derived Columns: */
+
+/************** Creating Derived Columns: ***************/
 -- Correct Delivered_value column otherwise it could lead negative value during creating  Undelivered_value column which is not the case in business 
 UPDATE salesdata
 SET Delivered_Value = (
@@ -184,15 +191,13 @@ UPDATE salesdata
 SET Undelivered_value = 0 WHERE Undelivered_value IS NULL
 
 
-/* Filtering and Subsetting Data: */
+/************** Filtering and Subsetting Data ***************/
 ALTER TABLE salesdata
 DROP COLUMN Delivered_Amt_without_Sugar_FMCG
 DROP COLUMN FMCG
 DROP COLUMN Sugar;
 
-
-/************ Now Data Has Been Cleaned And ready for analysys **************/
--- CHECK THE DATA
+/************** Data Validation ***************/
 SELECT * FROM salesdata
 
 -- View data type and columns
@@ -204,91 +209,103 @@ SELECT
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
 
+SELECT
+    Store_ID,
+    Order_Number,
+    COUNT(*) AS duplicate_count
+FROM salesdata
+GROUP BY Store_ID, Order_Number
+HAVING COUNT(*) > 1
+ORDER BY duplicate_count DESC;
 
-/*******************************************/
-/************ Sales Analysys **************/
---------------------------------
--- Time Series Analysis
--- Sales revenue over time
+/************ Now Data Has Been Cleaned And ready for analysys **************/
+
+
+/********************************************/
+/********* Part 2 Sales Analysys *********/
+
+/****** A Quick Sales Overview and Summary ********/
+SELECT 
+    ROUND(SUM(Ordered_Value), 2) AS Total_Ordered,
+	ROUND(SUM(Delivered_Value), 2) AS Total_Delivered_Value,
+	ROUND(SUM(Undelivered_value), 2) AS Total_Undelivered_values
+FROM salesdata;
+
+-- Total FakeOrder value
+SELECT 
+    ROUND(SUM(Ordered_Value), 2) AS Total_Cancellation
+FROM salesdata
+WHERE Delivered_Value = 0
+
+-- Conclusion: Overall revenue 787612350.92 Delivered value 648748741.47 and Undelivered 124733011.7 in which 58674265.11 is Faked Ordered value
+
+/************  Time Series Analysis  **************/
+-- Sales Performance Over The time
 SELECT 
     YEAR(Order_Date) AS Year,
     DATENAME(month, Order_Date) AS Month,
-    ROUND(SUM(Ordered_Value), 2) AS monthly_sales
+    ROUND(SUM(Ordered_Value), 2) AS monthly_sales,
+    ROUND(SUM(Delivered_Value), 2) AS Delivered_Value_sales,
+    ROUND(SUM(Undelivered_value), 2) AS Undelivered_value_sales,
+	Rank() OVER (Order BY SUM(Ordered_Value) DESC) AS RN
 FROM salesdata
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
 
--- Sales revenue by Delivered value over time 
+--  Conclusion: In The month of March highest sales followed by and May, Septamber has least followed by december.
+
+-- Tracking changes in Cancellation 
 SELECT 
     YEAR(Order_Date) AS Year,
     DATENAME(month, Order_Date) AS Month,
-    ROUND(SUM(Delivered_Value), 2) AS monthly_sales
+    ROUND(SUM(Ordered_Value), 2) AS Cancelled_order,
+	RANK() OVER(ORDER BY SUM(Ordered_Value)) AS RN
 FROM salesdata
+WHERE Delivered_Value = 0
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
+-- Conclusion: There is no improment is seeing over time It's seeing in oct and nivember but that's minth compnay has not full stocks
 
 
--- Tracking changes in canclalation/Undelivered_value calue over time
+-- Tracking changing in canclalation over each month for is there any improment
 SELECT 
     YEAR(Order_Date) AS Year,
     DATENAME(month, Order_Date) AS Month,
     ROUND(ABS(SUM(Undelivered_value) - 
 	LAG(SUM(Undelivered_value), 1, 0) OVER (ORDER BY YEAR(Order_Date), MONTH(Order_Date))),2) AS last_monthly_sales
 FROM salesdata
+WHERE Delivered_Value = 0
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY MONTH(Order_Date);
-
-SELECT *
-FROM SALESDATA
+-- Conclusion Order cancellation is going up month by month
 
 -- Number of Sales Representative over the time
 SELECT 
     YEAR(Order_Date) AS Year,
     DATENAME(month, Order_Date) AS Month,
+	ROUND(SUM(Ordered_Value), 2) AS Ordered_Sales,
     COUNT(DISTINCT SalesMan) AS Number_Of_Salesmans
 FROM salesdata
 GROUP BY YEAR(Order_Date), MONTH(Order_Date), DATENAME(month, Order_Date)
 ORDER BY year, MONTH(Order_Date);
+
+-- Conclusion: NUmber of hiring increase in november and december but overall sales decrese in comparasion to past months
 
 -- Days Which have highest Sales value Over the time
 SELECT Top 10 Order_Date, ROUND(SUM(Ordered_Value),2) AS TotalRevenue
 FROM SalesData
 GROUP BY Order_Date
 ORDER BY TotalRevenue DESC;
+-- Conclusion: Biggest spike days is near holi festival
 
--- Months have Highest Sales
-SELECT TOP 3 DATENAME(month, Order_Date) AS Month, ROUND(SUM(Ordered_Value), 2) AS TotalRevenue
-FROM SalesData
-GROUP BY  DATENAME(month, Order_Date)
-ORDER BY TotalRevenue DESC;
-
--- Months have lowest Sales
-SELECT TOP 3 DATENAME(month, Order_Date) AS Month, ROUND(SUM(Ordered_Value), 2) AS TotalRevenue
-FROM SalesData
-GROUP BY  DATENAME(month, Order_Date)
-ORDER BY TotalRevenue ASC;
-
-------------------------------
--- Store analysis
--- Top-performing stores
-SELECT TOP 10 Store_Name, SUM(delivered_Value) AS TotalSales, Area, ASM
-FROM SalesData
-GROUP BY Store_Name, Area,ASM
-ORDER BY TotalSales DESC;
-
--- Store that has returned/Cancelled Order most
-SELECT TOP 10 Store_Name,SUM(Undelivered_Value) AS Total_Undelivered, Area,ASM
-FROM salesdata
-GROUP BY Store_Name,Area, ASM
-ORDER BY total_Undelivered DESC
-
-
--- Area Sales Analysis
+/************  Area Sales Analysis  **************/
 /* Total sales (ordered value) by area */
 SELECT Area, ROUND(SUM(Ordered_Value),2) AS total_sales
 FROM salesdata
 GROUP BY Area
 ORDER BY total_sales DESC;
+-- Area such as Mira road, Nalasopara East, Thane West Vasai have highest sales that is part of western mumbai
+-- Conclusion: Western coastal area has high potential
 
 /* Top best performing area by Total sales (ordered value) */
 SELECT TOP 10
@@ -310,22 +327,25 @@ FROM salesdata
 WHERE delivered_value = 0
 GROUP BY AREA, SalesMan, ASM
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
+-- Highest Fake ordered placed in Nalasopara around (1888456.69 + 1529436.78)
 
+
+/**************  Store analysis ****************/
 -- Top Loyals stores by delivered value
-SELECT TOP 10 Store_Name, SUM(Delivered_Value) AS total_delivered
+SELECT TOP 10 Store_Name, SUM(Ordered_Value) as Total_Ordered, SUM(Delivered_Value) AS Total_delivered
 FROM salesdata
 GROUP BY Store_Name
 ORDER BY total_delivered DESC
 
 -- Stores That places most fake orders
-SELECT TOP 10 Store_Name, ROUND(SUM(Ordered_Value),2) AS Total_ordered
+SELECT TOP 10 Store_Name, ROUND(SUM(Ordered_Value),2) AS Total_ordered, Area
 FROM salesdata
 WHERE delivered_value = 0
-GROUP BY Store_Name
+GROUP BY Store_Name, Area
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 
--------------------------------------
-/* Sales representative Analysis*/
+
+/************** Sales representative Analysis ****************/
 -- Sales Performance by Salesman:
 SELECT
     s.SalesMan,
@@ -339,6 +359,41 @@ JOIN (
 ) s ON o.SalesMan = s.SalesMan
 GROUP BY s.SalesMan
 ORDER BY TotalOrderedValue DESC;
+-- Conclusion : Rajendra Patel has highest sales with just 172 customers and mohammed have 404 custmers.
+
+-- Area Penetration Performance by Salesman:
+SELECT 
+    s.SalesMan,
+    COUNT(DISTINCT o.Customer_No) AS NumberOfCustomers,
+    SUM(o.Ordered_Value) AS TotalOrderedValue,
+    SUM(o.Delivered_Value) AS TotalDeliveredValue
+FROM salesdata o
+JOIN (
+    SELECT DISTINCT SalesMan
+    FROM salesdata
+) s ON o.SalesMan = s.SalesMan
+GROUP BY s.SalesMan
+ORDER BY NumberOfCustomers DESC;
+-- Neeraj Sahu has 416 followed by Mohammad Saeed Shaikh 404
+
+-- AVG Salesman Penetration In Market
+WITH CTE AS(
+	SELECT 
+    s.SalesMan,
+    COUNT(DISTINCT o.Customer_No) AS NumberOfCustomers,
+    SUM(o.Ordered_Value) AS TotalOrderedValue,
+    SUM(o.Delivered_Value) AS TotalDeliveredValue
+FROM salesdata o
+JOIN (
+    SELECT DISTINCT SalesMan
+    FROM salesdata)
+	s ON o.SalesMan = s.SalesMan
+GROUP BY s.SalesMan)
+
+SELECT AVG(NumberOfCustomers) AS Average_Shops
+FROM CTE
+ORDER BY AVG(NumberOfCustomers) DESC
+-- Salesman AVG Shops Penetration In Market is 145
 
 -- Top performing sales representative performance by Ordered Value
 SELECT TOP 10 SalesMan, ROUND(SUM(Delivered_Value),2) AS total_sales
@@ -346,19 +401,12 @@ FROM salesdata
 GROUP BY SalesMan
 ORDER BY total_sales DESC;
 
--- Sales representative who have highest value cancaltion
+-- Sales representative who have highest deliver returnd in value term
 SELECT TOP 10 SalesMan, ROUND(SUM(Undelivered_Value),2) AS Undeliver_value
 FROM salesdata
 GROUP BY SalesMan
 ORDER BY Undeliver_value DESC;
 
-
--- Loss making sales representative
-SELECT TOP 10 SalesMan, ROUND(SUM(Undelivered_Value),2) AS Undeliver_value
-FROM salesdata
-GROUP BY SalesMan
-HAVING delivered_Value < (SELECT ROUND(AVG(delivered_Value),2) FROM Salesdata)
-ORDER BY Undeliver_value DESC;
 
 -- Salesman who placed Fake Orders most
 SELECT TOP 10 SalesMan,ASM, ROUND(SUM(Ordered_Value),2) AS Total_ordered
@@ -367,34 +415,51 @@ WHERE delivered_value = 0
 GROUP BY SalesMan, ASM
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 
--- Best Perfoming ASM (Area sales Manager)
+
+/************** ASM (Area sales Manager) Analysis ****************/
 SELECT
     ASM,
-    COUNT(DISTINCT SalesMan) AS NumberOfSalesmen,
-    SUM(Ordered_Value) AS TotalOrderedValue,
-    SUM(Delivered_Value) AS TotalDeliveredValue
+    ROUND(COUNT(DISTINCT SalesMan),2) AS NumberOfSalesmen,
+    ROUND(SUM(Ordered_Value),2) AS TotalOrderedValue,
+    ROUND(SUM(Delivered_Value),2) AS TotalDeliveredValue,
+	ROUND(SUM(Ordered_Value)/COUNT(DISTINCT SalesMan),2) AS Per_Salesman
 FROM salesdata
 GROUP BY ASM
-ORDER BY TotalOrderedValue DESC;
+ORDER BY Per_Salesman DESC;
+-- Conclusion: Bikas is best leader overall who Per SE has average sale of  19370302.76 ruppess over the time
+
+-- Best Perfoming ASM By Overall Delivered Value
+SELECT
+    ASM,
+    ROUND(COUNT(DISTINCT SalesMan),2) AS NumberOfSalesmen,
+    ROUND(SUM(Ordered_Value),2) AS TotalOrderedValue,
+    ROUND(SUM(Delivered_Value),2) AS TotalDeliveredValue,
+	Rank() OVER (Order by SUM(Delivered_Value) DESC) as Rn
+FROM salesdata
+GROUP BY ASM
+ORDER BY TotalDeliveredValue DESC;
+-- Conclusion: Darshan has overall highest sales followed by Vikash singh
+-- Leaders need to be imporoved : Sanjeev Vedak Amresh Singh Prithwi
 
 
+/************** Stastical Analysis ****************/
 -- Sales distribution of Order values
 SELECT 
     PERCENTILE_DISC(0.25) WITHIN GROUP (ORDER BY Ordered_Value) OVER() AS Q1,
     PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY Ordered_Value) OVER() AS median,
     PERCENTILE_DISC(0.75) WITHIN GROUP (ORDER BY Ordered_Value) OVER() AS Q3
 FROM salesdata;
+-- Conclusion: Quartile, Quartile3(median), Quartile3 OF order value amount are 3210.26, 3959.7,5786.01 respectally
 
 
 -- Outliers in delivered values
 DECLARE @AvgDeliveredValue FLOAT, @StdevDeliveredValue FLOAT;
-
 SELECT @AvgDeliveredValue = AVG(Delivered_Value),
        @StdevDeliveredValue = STDEV(Delivered_Value)
 FROM salesdata;
-
 SELECT Order_Number, Delivered_Value
 FROM salesdata
-WHERE Delivered_Value > @AvgDeliveredValue + 20 * @StdevDeliveredValue;
+WHERE Delivered_Value > @AvgDeliveredValue + 3 * @StdevDeliveredValue;
+-- Conclusion: There are not outliers seens in table
 
 
