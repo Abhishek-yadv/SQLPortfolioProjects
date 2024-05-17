@@ -416,7 +416,6 @@ FROM salesdata
 GROUP BY Store_Name
 ORDER BY total_delivered DESC;
 ```
-![14](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/37915c62-13e2-4622-acda-78d837711caf)
 
 #### Stores That place most fake orders
 ```sql
@@ -426,7 +425,6 @@ WHERE delivered_value = 0
 GROUP BY Store_Name, Area
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
-![15](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/047e8813-9c31-4f97-bd33-142e39288c7f)
 
 ## Sales Representative Analysis
 #### Sales Performance by Salesman
@@ -444,7 +442,7 @@ JOIN (
 GROUP BY s.SalesMan
 ORDER BY TotalOrderedValue DESC;
 ```
-![16](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/c89e3494-f828-4edb-9880-1ee55b2b5dd8)
+![14](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/37915c62-13e2-4622-acda-78d837711caf)
 
 Conclusion: Rajendra Patel has the highest sales with just 172 customers and Mohammed has 404 customers.
 
@@ -463,7 +461,7 @@ JOIN (
 GROUP BY s.SalesMan
 ORDER BY NumberOfCustomers DESC;
 ```
-![17](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/7e0c50c2-6b7a-422e-a066-eeabcb577ccb)
+![15](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/047e8813-9c31-4f97-bd33-142e39288c7f)
 
 Neeraj Sahu has 416 followed by Mohammad Saeed Shaikh 404.
 
@@ -486,7 +484,7 @@ SELECT AVG(NumberOfCustomers) AS Average_Shops
 FROM CTE
 ORDER BY AVG(NumberOfCustomers) DESC;
 ```
-![18](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/2726bc7e-65e9-40bd-8428-4b74d587c1aa)
+![16](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/c89e3494-f828-4edb-9880-1ee55b2b5dd8)
 
 Salesman AVG Shops Penetration In Market is 145.
 
@@ -497,7 +495,7 @@ FROM salesdata
 GROUP BY SalesMan
 ORDER BY total_sales DESC;
 ```
-![19](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/612e61ed-9d8c-44ed-bffe-e12d7d442603)
+![17](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/7e0c50c2-6b7a-422e-a066-eeabcb577ccb)
 
 #### Sales representative who has the highest deliver return in value term
 ```sql
@@ -506,8 +504,7 @@ FROM salesdata
 GROUP BY SalesMan
 ORDER BY Undeliver_value DESC;
 ```
-![20](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/27493352-d486-40da-b162-1ca28bdc76ac)
-
+![18](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/2726bc7e-65e9-40bd-8428-4b74d587c1aa)
 
 #### Salesman who placed Fake Orders most
 ```sql
@@ -517,8 +514,7 @@ WHERE delivered_value = 0
 GROUP BY SalesMan, ASM
 ORDER BY ROUND(SUM(Ordered_Value),2) DESC;
 ```
-![21](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/89e780aa-6b59-4976-8b60-2bb9c1971c14)
-
+![19](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/612e61ed-9d8c-44ed-bffe-e12d7d442603)
 
 
 ## ASM (Area Sales Manager) Analysis
@@ -535,7 +531,7 @@ FROM salesdata
 GROUP BY ASM
 ORDER BY Per_Salesman DESC;
 ```
-![22](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/17c71c71-7c89-42ce-b439-1d52a1ae2ae1)
+![20](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/27493352-d486-40da-b162-1ca28bdc76ac)
 
 **Conclusion:** Bikas is the best leader overall with an average sale per salesperson of 19,370,302.76 rupees over time.
 
@@ -551,7 +547,7 @@ FROM salesdata
 GROUP BY ASM
 ORDER BY TotalDeliveredValue DESC;
 ```
-![23](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/bbcee848-ccf6-4c71-9107-6f17400021ad)
+![21](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/89e780aa-6b59-4976-8b60-2bb9c1971c14)
 
 **Conclusion:** Darshan has the overall highest sales followed by Vikash Singh. Leaders needing improvement are Sanjeev Vedak, Amresh Singh, and Prithwi.
 
@@ -564,6 +560,8 @@ SELECT
     PERCENTILE_DISC(0.75) WITHIN GROUP (ORDER BY Ordered_Value) OVER() AS Q3
 FROM salesdata;
 ```
+![22](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/17c71c71-7c89-42ce-b439-1d52a1ae2ae1)
+
 **Conclusion:** Quartile 1, median, and Quartile 3 of order values are 3210.26, 3959.7, and 5786.01 respectively.
 
 #### Outliers in Delivered Values
@@ -576,5 +574,7 @@ SELECT Order_Number, Delivered_Value
 FROM salesdata
 WHERE Delivered_Value > @AvgDeliveredValue + 3 * @StdevDeliveredValue;
 ```
+![23](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/bbcee848-ccf6-4c71-9107-6f17400021ad)
+
 **Conclusion:** There are no outliers seen in the table.
 ```
