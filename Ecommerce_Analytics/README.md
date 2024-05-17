@@ -71,7 +71,6 @@ WHERE TABLE_NAME = 'salesdata';
 
 #### Checking Data Sample
 ```sql
--- Sample Checking
 SELECT TOP 10 *
 FROM salesdata
 ORDER BY NEWID();
@@ -79,7 +78,6 @@ ORDER BY NEWID();
 
 #### Identifying Unique Values in Categorical Columns
 ```sql
--- Retrieving distinct values from categorical columns
 SELECT DISTINCT Area FROM salesdata;
 SELECT DISTINCT ASM FROM salesdata;
 SELECT DISTINCT DASM FROM salesdata;
@@ -88,11 +86,11 @@ SELECT DISTINCT SalesMan FROM salesdata;
 
 #### Table Size and Date Range
 ```sql
--- Counting the number of rows
+-- Number of rows
 SELECT COUNT(*) AS num_rows
 FROM salesdata;
 
--- Counting the number of columns
+-- Number of columns
 SELECT COUNT(*) AS num_columns
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
@@ -104,7 +102,6 @@ FROM salesdata;
 
 ## Handling Missing Values
 ```sql
--- Checking for missing/null values
 SELECT
     SUM(CASE WHEN Store_ID IS NULL THEN 1 ELSE 0 END) AS store_ids,
     SUM(CASE WHEN Store_Name IS NULL THEN 1 ELSE 0 END) AS names,
