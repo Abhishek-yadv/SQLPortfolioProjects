@@ -53,17 +53,15 @@ The `salesdata` dataset is initially imported as a CSV file into MSSQL SERVER to
 
 
 ## Data Investigation 
-
-#### Checking Table Structure and Data Types
+#### Checking table structure and column details
 ```sql
--- Checking table structure and column details
 EXEC sp_columns salesdata;
 ```
 
 ![1](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/288c124f-9db3-4f47-bdd8-aeba642db60d)
 
-```
--- Checking columns and their data types
+#### Checking columns and their data types
+```sql
 SELECT
     COLUMN_NAME,
     DATA_TYPE,
@@ -103,8 +101,8 @@ WHERE TABLE_NAME = 'salesdata';
 ```
 ![4](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/6a4a2980-ce75-4067-aea6-b7dc8bee737b)
 
-```
 -- Retrieving the date range of the data
+```sql
 SELECT MAX(Order_Date) AS Last_Date, MIN(Order_Date) AS First_Date
 FROM salesdata;
 ```
