@@ -58,7 +58,10 @@ The `salesdata` dataset is initially imported as a CSV file into MSSQL SERVER to
 ```sql
 -- Checking table structure and column details
 EXEC sp_columns salesdata;
+```
+![1](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/288c124f-9db3-4f47-bdd8-aeba642db60d)
 
+```
 -- Checking columns and their data types
 SELECT
     COLUMN_NAME,
@@ -68,6 +71,7 @@ SELECT
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
 ```
+![2](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/9176af3b-cc66-4a51-91f8-89c8d301b000)
 
 #### Checking Data Sample
 ```sql
@@ -75,6 +79,7 @@ SELECT TOP 10 *
 FROM salesdata
 ORDER BY NEWID();
 ```
+![3](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/5f46c8d6-dc68-4297-a1ba-edbb570b0c01)
 
 #### Identifying Unique Values in Categorical Columns
 ```sql
@@ -83,6 +88,7 @@ SELECT DISTINCT ASM FROM salesdata;
 SELECT DISTINCT DASM FROM salesdata;
 SELECT DISTINCT SalesMan FROM salesdata;
 ```
+![4](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/6a4a2980-ce75-4067-aea6-b7dc8bee737b)
 
 #### Table Size and Date Range
 ```sql
@@ -94,11 +100,15 @@ FROM salesdata;
 SELECT COUNT(*) AS num_columns
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
+```
+![5](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/495f5c6a-5370-4396-a503-0e601bc3c77c)
 
+```
 -- Retrieving the date range of the data
-SELECT MAX(Order_Date), MIN(Order_Date)
+SELECT MAX(Order_Date) AS Last_Date, MIN(Order_Date) AS First_Date
 FROM salesdata;
 ```
+![6](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/a07d0e1e-ea8a-4fd1-a5dc-1a5c088f5999)
 
 ## Handling Missing Values
 ```sql
@@ -120,6 +130,7 @@ SELECT
     SUM(CASE WHEN Delivered_Amt_without_Sugar_FMCG IS NULL THEN 1 ELSE 0 END) AS null_delivered_amt_without_sugar_fmcg
 FROM salesdata;
 ```
+![7](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/39d32495-86b4-4955-bc2c-6f0157801055)
 
 ## Handling Duplicates 🚫
 ```sql
