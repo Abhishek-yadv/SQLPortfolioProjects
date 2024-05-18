@@ -591,8 +591,72 @@ WHERE Delivered_Value > @AvgDeliveredValue + 3 * @StdevDeliveredValue;
 ![23](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/bbcee848-ccf6-4c71-9107-6f17400021ad)
 
 **Conclusion:** There are no outliers seen in the table.
-```
-```
 
-# THANKS FOR WATCHING! 🎉
-## Haven't Imagined You Will Arrive Here. 🌟
+
+## Analysis Key Findings
+
+### Sales Summary
+
+- Total ordered value: ₹787,612,350.92
+- Total delivered value: ₹648,748,741.47
+- Total undelivered value: ₹124,733,011.70
+- Fake orders value: ₹58,674,265.11
+
+### Time Series Analysis
+
+- Highest sales month: March
+- Lowest sales months: September and December
+- Order cancellations increased month by month
+- Sales representatives hiring increased in November and December, but overall sales decreased compared to previous months
+- Biggest sales spikes occurred near the Holi festival
+
+### Area Sales Analysis
+
+- Western coastal areas (Mira Road, Nalasopara East, Thane West Vasai) have the highest sales potential
+- Nalasopara witnessed the most fake orders (₹1,888,456.69 + ₹1,529,436.78)
+
+### Store Analysis
+
+- Top 10 loyal stores by delivered value
+- Top 10 stores that placed the most fake orders
+
+### Sales Representative Analysis
+
+- Rajendra Patel had the highest sales with just 172 customers
+- Mohammad had 404 customers
+- Neeraj Sahu had the highest number of customers (416)
+- Average market penetration (number of shops) per salesman: 145
+
+### ASM (Area Sales Manager) Analysis
+
+- Best-performing ASM overall: Bikas (average sale of ₹19,370,302.76 per salesman)
+- ASM with the highest overall delivered value: Darshan
+- ASMs needing improvement: Sanjeev Vedak, Amresh Singh, Prithwi
+
+### Statistical Analysis
+
+- Order value distribution:
+  - First quartile (Q1): ₹3,210.26
+  - Median: ₹3,959.70
+  - Third quartile (Q3): ₹5,786.01
+  - No significant outliers detected in delivered values
+  
+Recommendations:
+
+1. **Focus on Western Coastal Areas**: The analysis revealed that areas like Mira Road, Nalasopara East, and Thane West Vasai have the highest sales potential. SuperZop should consider expanding its operations and increasing its presence in these high-performing areas to capitalize on the existing demand.
+
+2. **Address Fake Orders and Cancellations**: The analysis identified a significant number of fake orders and an increasing trend in order cancellations, particularly in areas like Nalasopara. SuperZop should investigate the root causes of these issues and implement measures to prevent fake orders and reduce cancellations, such as improving supply chain management, enhancing customer communication, and implementing stricter order verification processes.
+
+3. **Optimize Sales Representative Performance**: The analysis highlighted the varying performance of sales representatives. SuperZop should closely monitor and provide additional training and support to underperforming representatives, particularly those with high undelivered values or fake orders. Additionally, the company should recognize and incentivize top-performing representatives like Rajendra Patel and Mohammad Saeed Shaikh to retain and motivate them.
+
+4. **Strengthen Area Sales Manager (ASM) Leadership**: The analysis identified ASMs like Sanjeev Vedak, Amresh Singh, and Prithwi as requiring improvement in their performance. SuperZop should evaluate the reasons behind their underperformance and provide them with the necessary resources, training, and support to enhance their leadership abilities and drive better results from their teams.
+
+5. **Analyze Sales Spikes and Seasonal Trends**: The analysis revealed that sales spikes occurred around the Holi festival. SuperZop should further investigate these seasonal trends and consider implementing targeted marketing campaigns or promotions to capitalize on these high-demand periods.
+
+6. **Identify and Address Outliers**: The analysis identified outliers in delivered values. SuperZop should investigate these outliers to understand the underlying causes and take appropriate actions, such as addressing supply chain issues, improving order fulfillment processes, or implementing better inventory management practices.
+
+7. **Monitor and Adjust Hiring Strategies**: The analysis showed that hiring more sales representatives in November and December did not lead to an increase in sales compared to previous months. SuperZop should evaluate its hiring strategies and ensure that new hires are properly trained, supported, and aligned with the company's sales objectives.
+
+
+## THANKS FOR WATCHING! 🎉
+### Haven't Imagined You Will Arrive Here. 🌟
