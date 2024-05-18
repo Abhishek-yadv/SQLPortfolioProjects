@@ -1,4 +1,4 @@
-# Superzop End To End Sales Analysis
+# 🛒Superzop End To End Sales Analysis
 
 ## Part 1 Data Cleaning Process
 ### Overview
