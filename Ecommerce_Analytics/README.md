@@ -59,6 +59,7 @@ The `salesdata` dataset is initially imported as a CSV file into MSSQL SERVER to
 -- Checking table structure and column details
 EXEC sp_columns salesdata;
 ```
+
 ![1](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/288c124f-9db3-4f47-bdd8-aeba642db60d)
 
 ```
