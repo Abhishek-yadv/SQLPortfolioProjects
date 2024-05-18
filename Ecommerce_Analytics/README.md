@@ -101,8 +101,8 @@ WHERE TABLE_NAME = 'salesdata';
 ```
 ![4](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/6a4a2980-ce75-4067-aea6-b7dc8bee737b)
 
--- Retrieving the date range of the data
 ```sql
+-- Date range of the data
 SELECT MAX(Order_Date) AS Last_Date, MIN(Order_Date) AS First_Date
 FROM salesdata;
 ```
