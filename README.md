@@ -8,9 +8,8 @@ Welcome to my SQL Portfolio Projects repository! This collection showcases a var
 - **Data Cleaning**: Transform raw data into a clean, usable format.
 - **Analytics**: Generate meaningful reports and visualizations.
 
-#### Connect with Me
-
-If you have any questions or suggestions, feel free to tell me.
+## Connect with Me
 ---
+If you have any questions or suggestions, feel free to tell me.
 
 **Thank you for visiting!** 🎉
