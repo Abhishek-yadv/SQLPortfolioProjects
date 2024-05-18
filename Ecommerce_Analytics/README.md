@@ -76,7 +76,7 @@ WHERE TABLE_NAME = 'salesdata';
 ```sql
 SELECT TOP 10 *
 FROM salesdata
-ORDER BY NEWID();
+ORDER BY Store_ID;
 ```
 ![3](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/5f46c8d6-dc68-4297-a1ba-edbb570b0c01)
 
@@ -141,7 +141,7 @@ HAVING COUNT(*) > 1
 ORDER BY duplicate_count DESC;
 ```
 ![7](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/39d32495-86b4-4955-bc2c-6f0157801055)
-
+-- In this table order amount is diffrent for duplicate order number so it can' not duplicate number but database mangement team need to fix it.
 ### Observations and Conclusions
 
 - The column DASM has around 40% null values, which may represent cases where a District Area Sales Manager is not available, and the Regional Sales Manager (RSM) handles the responsibility.
