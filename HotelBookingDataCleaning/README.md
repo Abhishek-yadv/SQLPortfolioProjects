@@ -15,9 +15,9 @@ There is no one absolute way to define the steps involved in the process of data
 
 Introduction:
 
-This dataset encompasses reservation details for both a city hotel and a resort hotel, detailing the timing of reservations, duration of visits, counts of adults, children, and babies, as well as the availability of parking spaces, among various other aspects.
-The goal of this data cleaning project is to prepare and transform the Hotel Booking Demand dataset using SQL queries, ensuring that the data is clean, consistent, and ready for further analysis or modeling tasks.
-***Dataset: [Link](https://www.kaggle.com/datasets/jessemostipak/hotel-booking-demand/code?datasetId=511638&sortBy=voteCount)***
+This dataset contains reservation details for both a city hotel and a resort hotel, detailing the timing of reservations, duration of visits, counts of adults, children, and babies, as well as the availability of parking spaces, among various other aspects.
+The goal of this data cleaning project is to prepare and transform the Hotel Booking Demand dataset using SQL queries, ensuring that the data is clean, consistent, and ready for further analysis or modelling tasks.
+***Dataset: ![Link](https://www.kaggle.com/datasets/jessemostipak/hotel-booking-demand/code?datasetId=511638&sortBy=voteCount) ***
 
 This data cleaning process involve the following steps:
 1. **Data Investigation**:
