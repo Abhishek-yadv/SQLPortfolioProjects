@@ -89,7 +89,6 @@ SELECT DISTINCT ASM FROM salesdata;
 SELECT DISTINCT DASM FROM salesdata;
 SELECT DISTINCT SalesMan FROM salesdata;
 ```
-![4](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/6a4a2980-ce75-4067-aea6-b7dc8bee737b)
 
 #### Table Size and Date Range
 ```sql
@@ -102,14 +101,14 @@ SELECT COUNT(*) AS num_columns
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
 ```
-![5](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/495f5c6a-5370-4396-a503-0e601bc3c77c)
+![4](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/6a4a2980-ce75-4067-aea6-b7dc8bee737b)
 
 ```
 -- Retrieving the date range of the data
 SELECT MAX(Order_Date) AS Last_Date, MIN(Order_Date) AS First_Date
 FROM salesdata;
 ```
-![6](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/a07d0e1e-ea8a-4fd1-a5dc-1a5c088f5999)
+![5](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/495f5c6a-5370-4396-a503-0e601bc3c77c)
 
 ## Handling Missing Values
 ```sql
@@ -131,7 +130,7 @@ SELECT
     SUM(CASE WHEN Delivered_Amt_without_Sugar_FMCG IS NULL THEN 1 ELSE 0 END) AS null_delivered_amt_without_sugar_fmcg
 FROM salesdata;
 ```
-![7](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/39d32495-86b4-4955-bc2c-6f0157801055)
+![6](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/a07d0e1e-ea8a-4fd1-a5dc-1a5c088f5999)
 
 ## Handling Duplicates 🚫
 ```sql
@@ -143,6 +142,7 @@ GROUP BY Store_ID, Order_Number
 HAVING COUNT(*) > 1
 ORDER BY duplicate_count DESC;
 ```
+![7](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/39d32495-86b4-4955-bc2c-6f0157801055)
 
 ### Observations and Conclusions
 
