@@ -141,7 +141,9 @@ HAVING COUNT(*) > 1
 ORDER BY duplicate_count DESC;
 ```
 ![7](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/39d32495-86b4-4955-bc2c-6f0157801055)
--- In this table order amount is diffrent for duplicate order number so it can' not duplicate number but database mangement team need to fix it.
+
+-- In this table order amount is diffrent for duplicate order number so it should not be consider as duplicate but database mangement team need to fix it.
+
 ### Observations and Conclusions
 
 - The column DASM has around 40% null values, which may represent cases where a District Area Sales Manager is not available, and the Regional Sales Manager (RSM) handles the responsibility.
