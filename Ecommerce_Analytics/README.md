@@ -52,7 +52,7 @@ The datasets is taken from [Superzop](https://www.superzop.com/), a B2B e-commer
 The `salesdata` dataset is initially imported as a CSV file into MSSQL SERVER to begin the data cleaning process. Throughout the cleaning process, steps taken and any assumptions made are step wise documented to for better readability. Once the data cleaning process is complete, the cleaned and transformed dataset will be ready for further analysis, such as sales analysis across area, sales representatives, stores, ASM and recommendations for business decision-making.
 
 
-## Data Investigation 
+## Data Investigation 👀
 #### Checking table structure and column details
 ```sql
 EXEC sp_columns salesdata;
@@ -108,7 +108,8 @@ FROM salesdata;
 ```
 ![5](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/495f5c6a-5370-4396-a503-0e601bc3c77c)
 
-## Handling Missing Values
+## Handling Missing Values 🕵️‍♂️
+
 ```sql
 SELECT
     SUM(CASE WHEN Store_ID IS NULL THEN 1 ELSE 0 END) AS store_ids,
@@ -161,7 +162,7 @@ ORDER BY duplicate_count DESC;
 - The analysis will focus on overall sales, which is the company's core business (staples).
 - The dataset contains 12,740 rows and 15 columns, spanning the date range from 01-02-2023 to 31-10-2023.
 
-## Handling Inconsistent Data
+## Handling Inconsistent Data 🔄
 ```sql
 -- Rename TIMESTAMP column
 EXEC sp_rename 'salesdata.TIMESTAMP', 'Time_stamp', 'COLUMN';
@@ -171,7 +172,7 @@ UPDATE salesdata
 SET Order_Number = SUBSTRING(Order_Number, CHARINDEX('/', Order_Number) + 1, LEN(Order_Number));
 ```
 
-## Standardizing Data Formats
+## Standardizing Data Formats 📅
 
 ```sql
 -- Convert Order_Date data type to DATE
@@ -204,7 +205,7 @@ ALTER TABLE salesdata
 ALTER COLUMN Customer_No BIGINT;
 ```
 
-## Creating Derived Columns
+## Creating Derived Columns ➕
 
 ```sql
 -- Correct Delivered_Value column
@@ -228,7 +229,7 @@ UPDATE salesdata
 SET Undelivered_Value = 0 WHERE Undelivered_Value IS NULL;
 ```
 
-## Filtering and Subsetting Data
+## Filtering and Subsetting Data 🔍
 
 ```sql
 -- Drop unnecessary columns
@@ -238,7 +239,7 @@ DROP COLUMN FMCG,
 DROP COLUMN Sugar;
 ```
 
-## Data Validation
+## Data Validation ✅
 
 ```sql
 -- Check the data
