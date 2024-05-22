@@ -256,9 +256,9 @@ WHERE TABLE_NAME = 'salesdata';
 
 ---------------------------- Now Data Has Been Cleaned And ready for analysis ----------------------------
 
-## Part 2 Sales Analysis
+# Part 2 Analysis
 
-**** A Quick Sales Overview and Summary 
+### A Quick Sales Overview and Summary 
 
 
 ```sql
