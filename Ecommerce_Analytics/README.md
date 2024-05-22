@@ -256,6 +256,8 @@ SELECT
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'salesdata';
 ```
+
+
 ![2](https://github.com/Abhishek-yadv/SQLPortfolioProjects/assets/68497250/d3df24b2-27de-441e-ad1c-5ba0cec6f372)
 
 ---------------------------- Now Data Has Been Cleaned And ready for analysis ----------------------------
