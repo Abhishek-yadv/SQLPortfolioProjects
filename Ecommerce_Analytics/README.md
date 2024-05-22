@@ -258,7 +258,7 @@ WHERE TABLE_NAME = 'salesdata';
 
 # Part 2 Analysis
 
-### A Quick Sales Overview and Summary 
+## A Quick Sales Overview and Summary 
 
 
 ```sql
